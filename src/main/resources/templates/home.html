@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zenex IT Helpdesk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 40px;
+}
+.logo{
+    font-size:26px;
+    font-weight:700;
+    color:#00eaff;
+}
+.top-links{
+    display:flex;
+    gap:22px;
+}
+.top-links a{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    opacity:.9;
+}
+.top-links a:hover{ color:#00eaff; }
+
+/* MAIN */
+.main{
+    padding:40px;
+}
+
+/* QR */
+.qr-box{
+    background:#121a2f;
+    padding:25px;
+    border-radius:18px;
+    width:300px;
+}
+.qr-box h3{ color:#00ff95; }
+.qr-box img{
+    width:200px;
+    height:200px;
+    background:white;
+    padding:10px;
+    border-radius:12px;
+}
+
+/* CHAT ICON */
+.chat-icon{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:60px;
+    height:60px;
+    background:#00eaff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    cursor:pointer;
+    color:#001423;
+}
+
+/* CHAT BOX */
+.chat-box{
+    position:fixed;
+    bottom:95px;
+    right:25px;
+    width:320px;
+    background:#121a2f;
+    border-radius:16px;
+    display:none;
+    flex-direction:column;
+}
+.chat-header{
+    background:#00eaff;
+    color:#001423;
+    padding:12px;
+    font-weight:700;
+    border-radius:16px 16px 0 0;
+}
+.chat-body{
+    flex:1;
+    padding:12px;
+    font-size:14px;
+    overflow-y:auto;
+}
+.chat-input{
+    display:flex;
+    gap:8px;
+    padding:10px;
+}
+.chat-input input{
+    flex:1;
+    padding:8px;
+    border-radius:6px;
+    border:none;
+}
+.chat-input button{
+    padding:8px 14px;
+    background:#00eaff;
+    border:none;
+    border-radius:6px;
+    font-weight:600;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">Zenex IT Helpdesk</div>
+    <div class="top-links">
+        <a href="/ticket/new">🎫 Raise Ticket</a>
+        <a href="/track">🔍 Track Ticket</a>
+        <a href="/ai-help">🤖 AI Help</a>
+        <a href="/knowledge-base">📄 Articles</a>
+        <a href="/admin/login">⚙ Admin</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <div class="qr-box">
+        <h3>📱 Scan to Raise Ticket</h3>
+        <img src="/qr/ticket" alt="QR Code">
+        <p>Scan QR to open ticket form</p>
+    </div>
+</div>
+
+<!-- CHAT ICON -->
+<div class="chat-icon" onclick="toggleChat()">💬</div>
+
+<!-- CHAT BOX -->
+<div class="chat-box" id="chatBox">
+    <div class="chat-header">Chat with IT</div>
+
+    <div class="chat-body" id="chatBody"></div>
+
+    <div class="chat-input">
+        <input type="text" id="empId" placeholder="Employee ID">
+    </div>
+    <div class="chat-input">
+        <input type="text" id="msg" placeholder="Type your issue…">
+        <button onclick="sendChat()">Send</button>
+    </div>
+</div>
+
+<script>
+function toggleChat(){
+    const box=document.getElementById("chatBox");
+    box.style.display = box.style.display==="flex" ? "none" : "flex";
+}
+
+function sendChat(){
+    const emp=document.getElementById("empId").value;
+    const msg=document.getElementById("msg").value;
+    if(!emp || !msg) return;
+
+    fetch("/chat/send",{
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body:`employeeId=${emp}&message=${encodeURIComponent(msg)}`
+    }).then(()=>{
+        document.getElementById("msg").value="";
+        loadChat(emp);
+    });
+}
+
+function loadChat(emp){
+    fetch("/chat/history/"+emp)
+        .then(r=>r.json())
+        .then(data=>{
+            let box="";
+            data.forEach(m=>{
+                box+=`<div><b>${m.sender}:</b> ${m.message}</div>`;
+            });
+            document.getElementById("chatBody").innerHTML=box;
+        });
+}
+
+document.getElementById("empId").addEventListener("change",e=>{
+    loadChat(e.target.value);
+});
+</script>
+
+</body>
+</html>

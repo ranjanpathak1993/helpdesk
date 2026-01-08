@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Chat</title>
+<style>
+body{background:#001423;color:white;font-family:Poppins;}
+.container{display:flex;height:90vh;}
+.users{width:30%;border-right:1px solid #00eaff33;overflow:auto;}
+.users div{padding:12px;cursor:pointer;border-bottom:1px solid #00eaff22;}
+.users div:hover{background:#00eaff22;}
+.chat{flex:1;padding:15px;display:flex;flex-direction:column;}
+.messages{flex:1;overflow:auto;}
+.admin{color:#00ff95;}
+.user{color:#ffea76;}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="users">
+        <div th:each="u:${users}"
+             th:text="${u.employeeId}"
+             th:onclick="'loadChat(' + '\'' + ${u.employeeId} + '\'' + ')'">
+        </div>
+    </div>
+
+    <div class="chat">
+        <div class="messages" id="msgs"></div>
+        <input id="reply" placeholder="Reply...">
+        <button onclick="send()">Send</button>
+    </div>
+
+</div>
+
+<script>
+let currentEmp="";
+
+function loadChat(emp){
+    currentEmp=emp;
+    fetch('/admin/chat/view?empId='+emp)
+    .then(r=>r.json())
+    .then(d=>{
+        let box=document.getElementById('msgs');
+        box.innerHTML='';
+        d.forEach(m=>{
+            box.innerHTML+=`<div class="${m.sender=='ADMIN'?'admin':'user'}">
+            ${m.sender}: ${m.message}</div>`;
+        });
+    });
+}
+
+function send(){
+    fetch('/admin/chat/reply',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'empId='+currentEmp+'&message='+document.getElementById('reply').value
+    });
+    document.getElementById('reply').value='';
+    loadChat(currentEmp);
+}
+
+// polling
+setInterval(()=>{ if(currentEmp) loadChat(currentEmp); },3000);
+</script>
+
+</body>
+</html>

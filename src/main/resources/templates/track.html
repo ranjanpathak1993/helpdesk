@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Track Ticket | Zenex Helpdesk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.card{
+    background:#121a2f;
+    padding:40px;
+    border-radius:18px;
+    width:360px;
+    text-align:center;
+}
+h2{color:#00eaff;}
+input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:none;
+    margin-bottom:15px;
+}
+button{
+    width:100%;
+    padding:14px;
+    background:#00eaff;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+}
+.error{color:#ff6b6b;margin-top:10px;}
+a{display:block;margin-top:20px;color:#00eaff;text-decoration:none;}
+</style>
+</head>
+
+<body>
+<div class="card">
+    <h2>🔍 Track Your Ticket</h2>
+
+    <form method="get" action="/track/result">
+        <input type="number" name="id" placeholder="Enter Ticket ID" required>
+        <button type="submit">Track Ticket</button>
+    </form>
+
+    <div class="error" th:text="${error}"></div>
+
+    <a href="/">⬅ Back to Home</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Raise Ticket | Zenex Helpdesk</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+.container{
+    max-width:700px;
+    margin:40px auto;
+    background:#121a2f;
+    padding:25px;
+    border-radius:16px;
+}
+h2{
+    text-align:center;
+    color:#00eaff;
+    margin-bottom:20px;
+}
+label{
+    display:block;
+    margin-top:14px;
+    margin-bottom:6px;
+    font-weight:600;
+}
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+}
+input[type="file"]{
+    background:#0b1220;
+    color:white;
+}
+small{
+    opacity:.7;
+}
+button{
+    margin-top:22px;
+    width:100%;
+    padding:12px;
+    background:#00eaff;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+}
+.back{
+    text-align:center;
+    margin-top:15px;
+}
+.back a{
+    color:#00eaff;
+    text-decoration:none;
+    font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🎫 Raise a Support Ticket</h2>
+
+    <form method="post" action="/ticket/submit" enctype="multipart/form-data">
+
+        <!-- EMPLOYEE CODE -->
+        <label>Employee Code</label>
+        <input type="text"
+               name="employeeCode"
+               placeholder="e.g. EMP1023"
+               required>
+
+        <label>Employee Name</label>
+        <input type="text" name="name" required>
+
+        <label>Official Email</label>
+        <input type="email" name="email" required>
+
+        <label>Issue Type</label>
+        <select name="issueType" required>
+            <option value="">-- Select Issue --</option>
+            <option>Email</option>
+            <option>Printer</option>
+            <option>Network</option>
+            <option>WiFi</option>
+            <option>VPN</option>
+            <option>Hardware</option>
+            <option>Software</option>
+            <option>SAP</option>
+            <option>Application Lock</option>
+            <option>Display</option>
+            <option>TAB</option>
+        </select>
+
+        <!-- ✅ PRIORITY (PROPERLY ADDED) -->
+        <label>Priority</label>
+        <select name="priority" required>
+            <option value="">-- Select Priority --</option>
+            <option value="LOW">LOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="HIGH">HIGH</option>
+        </select>
+
+        <label>Description</label>
+        <textarea name="description"
+                  rows="5"
+                  placeholder="Describe your issue clearly..."
+                  required></textarea>
+
+        <label>Upload Photo (optional)</label>
+        <input type="file" name="image" accept="image/png, image/jpeg">
+        <small>JPG / PNG • Max 5 MB</small>
+
+        <label>Upload Video (optional)</label>
+        <input type="file" name="video" accept="video/mp4">
+        <small>MP4 • Max 30 MB</small>
+
+        <button type="submit">Submit Ticket</button>
+    </form>
+
+    <div class="back">
+        <a href="/">⬅ Back to Home</a>
+    </div>
+
+</div>
+
+</body>
+</html>

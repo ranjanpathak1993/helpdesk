@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin | Tickets</title>
+
+<style>
+body{
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+th,td{
+    padding:10px;
+    border-bottom:1px solid #333;
+    text-align:center;
+}
+select,button,a.btn{
+    padding:6px 10px;
+    border-radius:6px;
+    border:none;
+    font-weight:600;
+}
+button{
+    background:#00eaff;
+    cursor:pointer;
+}
+a.btn{
+    background:#00ff95;
+    color:#001423;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🎫 All Tickets</h2>
+
+<table>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Issue</th>
+    <th>Status</th>
+    <th>Update</th>
+    <th>View</th>
+</tr>
+
+<tr th:each="ticket : ${tickets}">
+    <td th:text="${ticket.id}"></td>
+    <td th:text="${ticket.name}"></td>
+    <td th:text="${ticket.email}"></td>
+    <td th:text="${ticket.issueType}"></td>
+
+    <!-- STATUS DROPDOWN -->
+    <td>
+        <form method="post" action="/admin/tickets/update-status">
+            <input type="hidden" name="id" th:value="${ticket.id}">
+            <select name="status">
+                <option th:selected="${ticket.status=='OPEN'}">OPEN</option>
+                <option th:selected="${ticket.status=='IN_PROGRESS'}">IN_PROGRESS</option>
+                <option th:selected="${ticket.status=='CLOSED'}">CLOSED</option>
+            </select>
+    </td>
+
+    <!-- UPDATE BUTTON -->
+    <td>
+            <button type="submit">Update</button>
+        </form>
+    </td>
+
+    <!-- VIEW BUTTON -->
+    <td>
+        <a th:href="@{'/admin/tickets/' + ${ticket.id}}" class="btn">
+            View
+        </a>
+    </td>
+</tr>
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | Zenex</title>
+
+<style>
+body{
+    font-family:Poppins, sans-serif;
+    background:#001423;
+    color:white;
+    padding:30px;
+}
+h1{color:#00eaff;}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:25px;
+}
+th,td{
+    padding:10px;
+    border-bottom:1px solid #00eaff33;
+    text-align:left;
+}
+th{background:#00eaff22;}
+select,button{
+    padding:6px;
+    border-radius:5px;
+    border:none;
+}
+button{
+    background:#00eaff;
+    font-weight:600;
+    cursor:pointer;
+}
+.status-open{color:#ffea76;}
+.status-closed{color:#00ff95;}
+.status-progress{color:#ffb36a;}
+a{color:#00eaff;text-decoration:none;}
+</style>
+</head>
+
+<body>
+
+<h1>⚙ Admin Dashboard</h1>
+
+<table>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Issue</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+<tr th:each="t : ${tickets}">
+    <td th:text="${t.id}"></td>
+    <td th:text="${t.name}"></td>
+    <td th:text="${t.email}"></td>
+    <td th:text="${t.issueType}"></td>
+    <td>
+        <span th:text="${t.status}"
+              th:classappend="
+                ${t.status=='OPEN'} ? 'status-open' :
+                (${t.status=='CLOSED'} ? 'status-closed' : 'status-progress')">
+        </span>
+    </td>
+    <td>
+        <form method="post" action="/admin/update-status">
+            <input type="hidden" name="id" th:value="${t.id}">
+            <select name="status">
+                <option>OPEN</option>
+                <option>IN_PROGRESS</option>
+                <option>CLOSED</option>
+            </select>
+            <button type="submit">Update</button>
+            <a th:href="@{'/admin/view/' + ${t.id}}">View</a>
+        </form>
+    </td>
+</tr>
+</table>
+
+<br>
+<a href="/admin/chat-reports">📁 View Chat Reports</a>
+<br><br>
+<a href="/logout">🚪 Logout</a>
+
+<!-- ================= ADMIN CHAT (SINGLE ICON) ================= -->
+
+<!-- Chat Floating Icon -->
+<div id="adminChatIcon" style="
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#00eaff;
+    color:#001423;
+    padding:14px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;">
+    💬
+</div>
+
+<!-- Chat Box -->
+<div id="adminChatBox" style="
+    display:none;
+    position:fixed;
+    right:20px;
+    bottom:80px;
+    width:300px;
+    background:#121a2f;
+    border-radius:14px;
+    color:white;
+    padding:10px;">
+    
+    <div style="background:#00eaff;color:#001423;padding:8px;border-radius:10px;font-weight:700;">
+        Live User Chat
+    </div>
+
+    <input id="empIdInput" placeholder="Employee ID"
+           style="margin-top:6px;width:100%;padding:6px;border-radius:6px;border:none;">
+
+    <div id="chatMessages" style="height:200px;overflow:auto;font-size:13px;margin:8px 0;"></div>
+
+    <div style="display:flex;gap:5px;">
+        <input id="adminMsg" placeholder="Type reply..."
+               style="flex:1;padding:6px;border-radius:6px;border:none;">
+        <button onclick="sendAdminReply()">Send</button>
+    </div>
+</div>
+
+<script>
+// Toggle chat box
+document.getElementById("adminChatIcon").onclick = () => {
+    let box = document.getElementById("adminChatBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+};
+
+// Send admin message
+function sendAdminReply() {
+    let emp = document.getElementById("empIdInput").value;
+    let msg = document.getElementById("adminMsg").value;
+
+    if(!emp || !msg) return;
+
+    fetch("/chat/send", {
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body:`employeeId=${emp}&message=${encodeURIComponent(msg)}&sender=ADMIN`
+    }).then(() => {
+        loadAdminChat(emp);
+        document.getElementById("adminMsg").value = "";
+    });
+}
+
+// Load chat history
+function loadAdminChat(emp){
+    fetch(`/chat/history/${emp}`)
+    .then(r => r.json())
+    .then(data => {
+        let html = "";
+        data.forEach(m=>{
+            html += `<div><b>${m.sender}:</b> ${m.message}</div>`;
+        });
+        document.getElementById("chatMessages").innerHTML = html;
+    });
+}
+
+// When admin types employee ID
+document.getElementById("empIdInput").addEventListener("change",()=>{
+    let emp = document.getElementById("empIdInput").value.trim();
+    if(emp !== "") loadAdminChat(emp);
+});
+</script>
+
+</body>
+</html>

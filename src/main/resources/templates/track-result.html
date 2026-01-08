@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ticket Result</title>
+<style>
+body{font-family:Poppins;background:#001423;color:white;text-align:center;padding:40px;}
+.card{width:500px;margin:auto;background:#ffffff12;padding:25px;border-radius:15px;}
+table{width:100%;margin-top:20px;}
+td{padding:6px;}
+.status{color:#00ff95;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🎫 Ticket Details</h2>
+    <table>
+        <tr><td>ID</td><td th:text="${ticket.id}"></td></tr>
+        <tr><td>Name</td><td th:text="${ticket.name}"></td></tr>
+        <tr><td>Email</td><td th:text="${ticket.email}"></td></tr>
+        <tr><td>Issue</td><td th:text="${ticket.issueType}"></td></tr>
+        <tr><td>Priority</td><td th:text="${ticket.priority}"></td></tr>
+        <tr><td>Status</td><td class="status" th:text="${ticket.status}"></td></tr>
+    </table>
+    <br>
+    <a href="/" style="color:#00eaff;">🏠 Home</a>
+</div>
+
+</body>
+</html>

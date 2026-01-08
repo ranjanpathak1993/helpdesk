@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Analytics | Zenex Admin</title>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:240px;
+    height:100vh;
+    background:#060c18;
+    padding:20px;
+    box-shadow:2px 0 20px rgba(0,0,0,.8);
+}
+.sidebar h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#00eaff;
+}
+.sidebar a{
+    display:block;
+    padding:12px 15px;
+    margin:8px 0;
+    text-decoration:none;
+    color:#cfd8ff;
+    border-radius:8px;
+    transition:.3s;
+}
+.sidebar a:hover,
+.sidebar a.active{
+    background:#00eaff;
+    color:#001423;
+    font-weight:600;
+}
+
+/* ===== MAIN ===== */
+.main{
+    margin-left:260px;
+    padding:30px;
+}
+
+/* ===== HEADER ===== */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+.header h1{
+    font-size:26px;
+    color:#00eaff;
+}
+.header span{
+    font-size:14px;
+    opacity:.8;
+}
+
+/* ===== GRID ===== */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+/* ===== CARD ===== */
+.card{
+    background:#121a2f;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 0 25px rgba(0,0,0,.7);
+}
+.card h3{
+    margin-bottom:15px;
+    color:#00eaff;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+    margin-top:40px;
+    text-align:center;
+    font-size:13px;
+    opacity:.6;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar">
+    <h2>⚙ Zenex Admin</h2>
+    <a href="/admin/dashboard">📊 Dashboard</a>
+    <a href="/admin/tickets">🎫 Tickets</a>
+    <a href="/admin/reports">📑 Reports</a>
+    <a href="/admin/analytics" class="active">📈 Analytics</a>
+    <a href="/logout">🚪 Logout</a>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Analytics</h1>
+        <span>Visual insights & trends</span>
+    </div>
+
+    <!-- CHART GRID -->
+    <div class="grid">
+
+        <!-- STATUS PIE -->
+        <div class="card">
+            <h3>Tickets by Status</h3>
+            <canvas id="statusChart"></canvas>
+        </div>
+
+        <!-- PRIORITY BAR -->
+        <div class="card">
+            <h3>Tickets by Priority</h3>
+            <canvas id="priorityChart"></canvas>
+        </div>
+
+        <!-- DAILY LINE -->
+        <div class="card">
+            <h3>Tickets per Day</h3>
+            <canvas id="dailyChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Zenex IT Helpdesk • Analytics Module
+    </div>
+
+</div>
+
+<!-- ===== CHART JS ===== -->
+<script>
+/* Status Pie */
+new Chart(document.getElementById('statusChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Open', 'In Progress', 'Closed'],
+        datasets: [{
+            data: [30, 20, 50],
+            backgroundColor: ['#ffea76','#ffb36a','#00ff95']
+        }]
+    }
+});
+
+/* Priority Bar */
+new Chart(document.getElementById('priorityChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Low', 'Medium', 'High', 'Critical'],
+        datasets: [{
+            data: [15, 25, 30, 10],
+            backgroundColor: '#00eaff'
+        }]
+    },
+    options:{
+        scales:{
+            y:{beginAtZero:true}
+        }
+    }
+});
+
+/* Daily Line */
+new Chart(document.getElementById('dailyChart'), {
+    type: 'line',
+    data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [{
+            label: 'Tickets',
+            data: [12,18,14,20,22,10,8],
+            borderColor: '#00eaff',
+            tension: 0.4
+        }]
+    }
+});
+</script>
+
+</body>
+</html>

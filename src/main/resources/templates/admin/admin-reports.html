@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reports | Zenex Admin</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:240px;
+    height:100vh;
+    background:#060c18;
+    padding:20px;
+    box-shadow:2px 0 20px rgba(0,0,0,.8);
+}
+.sidebar h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#00eaff;
+}
+.sidebar a{
+    display:block;
+    padding:12px 15px;
+    margin:8px 0;
+    text-decoration:none;
+    color:#cfd8ff;
+    border-radius:8px;
+}
+.sidebar a.active,
+.sidebar a:hover{
+    background:#00eaff;
+    color:#001423;
+    font-weight:600;
+}
+
+/* ===== MAIN ===== */
+.main{
+    margin-left:260px;
+    padding:30px;
+}
+
+/* ===== HEADER ===== */
+.header h1{
+    font-size:26px;
+    color:#00eaff;
+}
+.header span{
+    font-size:14px;
+    opacity:.8;
+}
+
+/* ===== FILTER ===== */
+.filter-box{
+    background:#121a2f;
+    padding:20px;
+    border-radius:16px;
+    margin:25px 0;
+    display:flex;
+    gap:15px;
+}
+.filter-box input{
+    padding:8px;
+    border-radius:6px;
+    border:none;
+    background:#0b1220;
+    color:white;
+}
+.filter-box button{
+    padding:8px 16px;
+    background:#00ff95;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* ===== CARDS ===== */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
+.card{
+    background:#121a2f;
+    padding:20px;
+    border-radius:16px;
+}
+.card h3{color:#00eaff;margin-bottom:8px;}
+.card p{font-size:14px;opacity:.8;margin-bottom:12px;}
+.btn{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#00eaff;
+    color:#001423;
+    font-weight:600;
+}
+.btn.green{background:#00ff95;}
+.btn.orange{background:#ffb36a;}
+.btn.red{background:#ff6b6b;color:white;}
+
+/* ===== TABLE ===== */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:40px;
+}
+th,td{
+    padding:10px;
+    border-bottom:1px solid #333;
+}
+th{color:#00eaff;}
+
+/* ===== FOOTER ===== */
+.footer{
+    margin-top:60px;
+    text-align:center;
+    font-size:13px;
+    opacity:.6;
+}
+.footer a{
+    display:inline-block;
+    margin-bottom:12px;
+    padding:8px 18px;
+    background:#00eaff;
+    color:#001423;
+    text-decoration:none;
+    border-radius:20px;
+    font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>⚙ Zenex Admin</h2>
+    <a href="/admin/dashboard">📊 Dashboard</a>
+    <a href="/admin/tickets">🎫 Tickets</a>
+    <a href="/admin/reports" class="active">📑 Reports</a>
+    <a href="/admin/analytics">📈 Analytics</a>
+    <a href="/logout">🚪 Logout</a>
+</div>
+
+<div class="main">
+
+    <div class="header">
+        <h1>Reports</h1>
+        <span>Export & analyze ticket data</span>
+    </div>
+
+    <!-- SEARCH -->
+    <form class="filter-box" method="get" action="/admin/reports">
+        <input type="date" name="from" required>
+        <input type="date" name="to" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card">
+            <h3>Daily Report</h3>
+            <p>All tickets created today</p>
+            <a href="/admin/reports/download?type=daily">
+                <button class="btn">Download Excel</button>
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Monthly Report</h3>
+            <p>Complete monthly ticket data</p>
+            <a href="/admin/reports/download?type=monthly">
+                <button class="btn green">Download Excel</button>
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>Status Report</h3>
+            <p>Tickets by status</p>
+            <a href="/admin/reports/download?type=status">
+                <button class="btn orange">Download Excel</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- 🔍 SEARCH RESULT TABLE -->
+    <table th:if="${tickets != null}">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+
+        <tr th:each="t : ${tickets}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.name}"></td>
+            <td th:text="${t.email}"></td>
+            <td th:text="${t.status}"></td>
+            <td th:text="${t.createdTime}"></td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        <a href="/admin/dashboard">← Back to Dashboard</a><br>
+        © 2026 Zenex IT Helpdesk • Reports Module
+    </div>
+
+</div>
+
+</body>
+</html>

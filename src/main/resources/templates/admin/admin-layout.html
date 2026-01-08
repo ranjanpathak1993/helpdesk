@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zenex Admin Panel</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:240px;
+    height:100vh;
+    background:#060c18;
+    padding:20px;
+    box-shadow:2px 0 20px rgba(0,0,0,.8);
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:30px;
+    color:#00eaff;
+}
+
+.sidebar a{
+    display:block;
+    padding:12px 15px;
+    margin:8px 0;
+    text-decoration:none;
+    color:#cfd8ff;
+    border-radius:8px;
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    background:#00eaff;
+    color:#001423;
+    font-weight:600;
+}
+
+/* ===== MAIN ===== */
+.main{
+    margin-left:260px;
+    padding:30px;
+}
+
+/* ===== HEADER ===== */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:26px;
+    color:#00eaff;
+}
+
+.header .user{
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* ===== CONTENT ===== */
+.content{
+    background:#121a2f;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 0 25px rgba(0,0,0,.7);
+    min-height:400px;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+    margin-top:40px;
+    text-align:center;
+    font-size:13px;
+    opacity:0.6;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div class="sidebar">
+    <h2>⚙ Zenex Admin</h2>
+
+    <a href="/admin/dashboard">📊 Dashboard</a>
+    <a href="/admin/tickets">🎫 Tickets</a>
+    <a href="/admin/reports">📑 Reports</a>
+    <a href="/admin/analytics">📈 Analytics</a>
+    <a href="/admin/chat-reports">💬 Chat Reports</a>
+    <a href="/logout">🚪 Logout</a>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Admin Panel</h1>
+        <div class="user">Welcome, Admin</div>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div class="content">
+        <!-- 
+            👉 YAHAN har admin page ka actual content aayega
+            Dashboard / Tickets / Reports / Analytics
+        -->
+        <p style="opacity:.7">
+            Select any option fro

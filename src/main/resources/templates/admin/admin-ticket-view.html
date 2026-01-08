@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ticket Details | Admin</title>
+
+<style>
+body{
+    font-family:Poppins, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+.container{
+    max-width:800px;
+    margin:40px auto;
+    background:#121a2f;
+    padding:25px;
+    border-radius:16px;
+}
+h2{
+    color:#00eaff;
+}
+.label{
+    font-weight:600;
+    margin-top:12px;
+}
+.value{
+    margin-bottom:10px;
+    opacity:.9;
+}
+img, video{
+    max-width:100%;
+    margin-top:10px;
+    border-radius:12px;
+}
+a{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 18px;
+    background:#00eaff;
+    color:#001423;
+    text-decoration:none;
+    border-radius:20px;
+    font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🎫 Ticket #<span th:text="${ticket.id}"></span></h2>
+
+<div class="label">Employee Code</div>
+<div class="value" th:text="${ticket.employeeCode}"></div>
+
+<div class="label">Name</div>
+<div class="value" th:text="${ticket.name}"></div>
+
+<div class="label">Email</div>
+<div class="value" th:text="${ticket.email}"></div>
+
+<div class="label">Issue Type</div>
+<div class="value" th:text="${ticket.issueType}"></div>
+
+<div class="label">Description</div>
+<div class="value" th:text="${ticket.description}"></div>
+
+<div class="label">Status</div>
+<div class="value" th:text="${ticket.status}"></div>
+
+<div th:if="${ticket.imagePath}">
+    <div class="label">Image</div>
+    <img th:src="@{'/uploads/' + ${ticket.imagePath}}">
+</div>
+
+<div th:if="${ticket.videoPath}">
+    <div class="label">Video</div>
+    <video controls>
+        <source th:src="@{'/uploads/' + ${ticket.videoPath}}">
+    </video>
+</div>
+
+<a href="/admin/tickets">⬅ Back to Tickets</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ticket View</title>
+<style>
+body{font-family:Poppins;background:#001423;color:white;padding:40px;}
+.box{width:650px;margin:auto;background:#ffffff15;padding:25px;border-radius:15px;}
+h2{color:#00eaff;text-align:center;}
+.btn{padding:10px 18px;background:#00eaff;color:#003241;font-weight:600;text-decoration:none;border-radius:6px;}
+.pre{white-space:pre-line;background:#00000030;padding:10px;border-radius:5px;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>🎫 Ticket Details</h2><hr>
+
+    <p><b>ID:</b> <span th:text="${ticket.id}"></span></p>
+    <p><b>Name:</b> <span th:text="${ticket.name}"></span></p>
+    <p><b>Email:</b> <span th:text="${ticket.email}"></span></p>
+    <p><b>Status:</b> <span th:text="${ticket.status}"></span></p>
+
+    <h3>📝 Description</h3>
+    <div class="pre" th:text="${ticket.description}"></div>
+
+    <br>
+    <a th:href="@{'/ticket/pdf/' + ${ticket.id}}" class="btn">📄 Download PDF</a>
+    <a href="/admin/dashboard" class="btn">← Back</a>
+</div>
+
+</body>
+</html>

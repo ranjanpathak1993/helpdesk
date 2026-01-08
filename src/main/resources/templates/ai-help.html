@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Help | Zenex</title>
+
+<style>
+body{
+    background:#0b1220;
+    font-family:Poppins, sans-serif;
+    color:white;
+}
+.container{
+    max-width:900px;
+    margin:40px auto;
+}
+h1{
+    text-align:center;
+    color:#00eaff;
+}
+.subtitle{
+    text-align:center;
+    opacity:.8;
+    margin-bottom:20px;
+}
+.chat-box{
+    background:#121a2f;
+    padding:20px;
+    border-radius:16px;
+    height:420px;
+    overflow-y:auto;
+}
+.msg{ margin-bottom:14px; line-height:1.6; }
+.user{ color:#00ff95; }
+.ai{ color:#ffd166; }
+
+.input-box{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+.input-box input{
+    flex:1;
+    padding:14px;
+    border-radius:8px;
+    border:none;
+}
+.input-box button{
+    padding:14px 26px;
+    background:#00eaff;
+    border:none;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+}
+.footer{
+    text-align:center;
+    margin-top:25px;
+}
+.footer a{
+    display:block;
+    margin-top:10px;
+    font-weight:700;
+    text-decoration:none;
+}
+.raise{ color:#ff6b6b; }
+.home{ color:#00eaff; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤖 AI Help</h1>
+    <div class="subtitle">Smart IT assistance (English responses)</div>
+
+    <div class="chat-box" id="chat">
+        <div class="msg ai">
+            🤖 Hello! Describe your IT problem and I’ll try to help.
+        </div>
+    </div>
+
+    <div class="input-box">
+        <input id="msg" placeholder="Describe your problem here..."
+               onkeydown="if(event.key==='Enter')send()">
+        <button onclick="send()">Send</button>
+    </div>
+
+    <div class="footer">
+        <a href="javascript:raiseTicket()" class="raise">
+            ❌ Still not solved? Raise a Ticket
+        </a>
+        <a href="/" class="home">⬅ Back to Home</a>
+    </div>
+
+</div>
+
+<script>
+let conversation = [];
+
+function send(){
+    let input = document.getElementById("msg");
+    let text = input.value.trim();
+    if(!text) return;
+
+    let chat = document.getElementById("chat");
+    chat.innerHTML += `<div class="msg user">👤 ${text}</div>`;
+    conversation.push("USER: " + text);
+
+    fetch('/ai/chat',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'message='+encodeURIComponent(text)
+    })
+    .then(r=>r.text())
+    .then(ans=>{
+        chat.innerHTML += `<div class="msg ai">🤖 ${ans.replace(/\n/g,"<br>")}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+        conversation.push("AI: " + ans);
+        localStorage.setItem("AI_HELP_CONVO", conversation.join("\n"));
+    });
+
+    input.value="";
+}
+
+function raiseTicket(){
+    // just open ticket page
+    window.location.href = "/ticket/new";
+}
+
+// 👉 inject AI text AFTER ticket page loads
+window.addEventListener("storage", ()=>{});
+</script>
+
+</body>
+</html>

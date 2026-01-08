@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Chat</title>
+<style>
+body{font-family:Poppins;background:#0b1220;color:white;padding:20px}
+.box{max-width:700px;margin:auto}
+.msg{margin:8px 0}
+.admin{color:#00eaff}
+.user{color:#00ff95}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>Chat – [[${employeeId}]]</h2>
+
+<div>
+    <div th:each="c : ${chats}" class="msg">
+        <b th:text="${c.sender}" th:class="${c.sender=='ADMIN'}?'admin':'user'"></b> :
+        <span th:text="${c.message}"></span>
+    </div>
+</div>
+
+<form method="post" action="/admin/chat/reply">
+    <input type="hidden" name="employeeId" th:value="${employeeId}">
+    <input name="message" style="width:80%">
+    <button>Send</button>
+</form>
+</div>
+
+</body>
+             
