@@ -3,21 +3,22 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing dependencies...
+      - echo "Installing dependencies..."
       - yum install -y sshpass
       - mvn -v
 
   build:
     commands:
-      - echo Building Spring Boot Application...
+      - echo "Building Spring Boot Application..."
       - mvn clean package -DskipTests
 
   post_build:
     commands:
       - echo "---- Listing JAR Files ----"
       - ls -la target
+
       - echo "---- Detecting JAR Name ----"
-      - export JAR_NAME=$(ls target/*.jar | head -n 1 | xargs -n 1 basename)
+      - JAR_NAME=$(ls target/*.jar | head -n 1 | xargs -n 1 basename)
       - echo "Detected JAR: $JAR_NAME"
 
       - echo "Uploading JAR to EC2 server..."
