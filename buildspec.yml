@@ -17,7 +17,7 @@ phases:
       - echo "Listing target folder..."
       - ls -la target
       - echo "Detecting JAR file..."
-      - "JAR_NAME=$(ls target/*.jar | head -n 1 | xargs -n 1 basename)"
+      - JAR_NAME=$(ls target/*.jar | head -n 1 | xargs -n 1 basename)
       - echo "Detected JAR: $JAR_NAME"
       - echo "Uploading JAR to EC2..."
       - sshpass -p ${EC2_PASS} scp -o StrictHostKeyChecking=no target/$JAR_NAME ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}/app/$JAR_NAME
