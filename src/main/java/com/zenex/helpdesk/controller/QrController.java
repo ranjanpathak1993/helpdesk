@@ -16,7 +16,7 @@ public class QrController {
     public byte[] ticketQr() throws Exception {
 
         // QR will open ticket form directly
-        String url = "http://34.236.37.18:8081/ticket/new";
+        String url = "www.ranjanpallo.tech/ticket/new";
         return qrService.generateQRCode(url);
     }
 }
