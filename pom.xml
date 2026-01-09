@@ -105,5 +105,8 @@
             </plugin>
         </plugins>
     </build>
-
+<finalName>zenex-helpdesk-pro-${maven.build.timestamp}</finalName>
+<properties>
+    <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+</properties>
 </project>
