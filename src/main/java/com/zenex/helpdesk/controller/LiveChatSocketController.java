@@ -6,7 +6,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-
 import java.time.LocalDateTime;
 
 @Controller
@@ -20,28 +19,22 @@ public class LiveChatSocketController {
         this.messagingTemplate = messagingTemplate;
     }
 
-    // USER sends → ADMIN receives
+    // USER -> ADMIN + USER (Real-time)
     @MessageMapping("/chat.send")
-    public void handleUserMessage(@Payload ChatMessage msg) {
-
+    public void sendUserMessage(@Payload ChatMessage msg) {
         msg.setCreatedAt(LocalDateTime.now());
         chatRepository.save(msg);
 
-        // send message to admin and user specific channel
         messagingTemplate.convertAndSend("/topic/chat/" + msg.getEmployeeId(), msg);
-
-        // admin should know new chat user
         messagingTemplate.convertAndSend("/topic/admin-alert", msg);
     }
 
-    // ADMIN replies → USER receives
+    // ADMIN -> USER (Real-time)
     @MessageMapping("/chat.reply")
-    public void handleAdminReply(@Payload ChatMessage msg) {
-
+    public void sendAdminReply(@Payload ChatMessage msg) {
         msg.setCreatedAt(LocalDateTime.now());
         chatRepository.save(msg);
 
-        // send reply to that specific user
         messagingTemplate.convertAndSend("/topic/chat/" + msg.getEmployeeId(), msg);
     }
 }
