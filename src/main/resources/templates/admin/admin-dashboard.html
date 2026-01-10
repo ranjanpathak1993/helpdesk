@@ -93,20 +93,65 @@ body{
 </div>
 
 
-<!-- ************* FIXED REST CHAT JS *************** -->
+<!-- ************* FINAL REAL-TIME CHAT JS *************** -->
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 
 <script>
+
+let stomp = null;
 let currentEmp = null;
 
-/* When admin enters employee ID */
+/* CONNECT ADMIN TO WEBSOCKET */
+function connectAdmin() {
+    if (stomp) return;
+
+    const sock = new SockJS('/chat-support');
+    stomp = Stomp.over(sock);
+
+    stomp.connect({}, () => {
+        console.log("Admin WebSocket Connected");
+    });
+}
+
+/* EMPLOYEE ID CHANGE = load old + start live chat */
 document.getElementById("empId").addEventListener("change", () => {
     currentEmp = empId.value.trim();
     if (!currentEmp) return;
 
+    // load existing chat via HTTP
     loadHistory();
+
+    // then connect WebSocket
+    connectAdmin();
+
+    // subscribe to user's real-time topic
+    subscribeToUser(currentEmp);
 });
 
-/* Load chat history from backend */
+/* SUBSCRIBE TO REAL-TIME MESSAGES */
+function subscribeToUser(empId) {
+
+    stomp.subscribe("/topic/chat/" + empId, (msg) => {
+        const m = JSON.parse(msg.body);
+
+        chatArea.innerHTML += `
+            <div class="${m.sender === 'ADMIN' ? 'msg-admin' : 'msg-user'}">
+                <b>${m.sender}:</b> ${m.message}
+            </div>
+        `;
+
+        chatArea.scrollTop = chatArea.scrollHeight;
+    });
+
+    // new user alerts
+    stomp.subscribe("/topic/admin-alert", (msg) => {
+        console.log("New User:", msg.body);
+    });
+}
+
+/* LOAD HISTORY (HTTP AS IS) */
 function loadHistory() {
     fetch(`/chat/history/${currentEmp}`)
         .then(r => r.json())
@@ -122,19 +167,21 @@ function loadHistory() {
         });
 }
 
-/* Send admin reply */
+/* SEND MESSAGE USING WEBSOCKET */
 function sendAdmin() {
     if (!currentEmp || !adminMsg.value.trim()) return;
 
-    fetch("/chat/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `employeeId=${currentEmp}&message=${encodeURIComponent(adminMsg.value)}&sender=ADMIN`
-    }).then(() => {
-        adminMsg.value = "";
-        loadHistory();
-    });
+    connectAdmin(); // ensure WS is live
+
+    stomp.send("/app/chat.reply", {}, JSON.stringify({
+        employeeId: currentEmp,
+        sender: "ADMIN",
+        message: adminMsg.value
+    }));
+
+    adminMsg.value = ""; // clear box
 }
+
 </script>
 
 </body>
