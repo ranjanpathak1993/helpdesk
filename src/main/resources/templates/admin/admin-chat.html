@@ -21,12 +21,27 @@ body{font-family:Poppins;background:#0b1220;color:white;padding:20px}
         <span th:text="${c.message}"></span>
     </div>
 </div>
+<input type="hidden" id="empId" th:value="${employeeId}">
+<input id="adminMsg" placeholder="Type reply..." style="width:80%">
+<button type="button" onclick="sendAdmin()">Send</button>
 
-<form method="post" action="/admin/chat/reply">
-    <input type="hidden" name="employeeId" th:value="${employeeId}">
-    <input name="message" style="width:80%">
-    <button>Send</button>
-</form>
+<script>
+function sendAdmin() {
+    let emp = document.getElementById("empId").value;
+    let msg = document.getElementById("adminMsg").value;
+
+    if(!msg || !emp) return;
+
+    fetch("/chat/send", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `employeeId=${emp}&message=${encodeURIComponent(msg)}&sender=ADMIN`
+    }).then(() => {
+        document.getElementById("adminMsg").value = "";
+        location.reload(); // refresh history
+    });
+}
+</script>
 </div>
 
 </body>
