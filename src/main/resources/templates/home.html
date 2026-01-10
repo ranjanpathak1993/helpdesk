@@ -6,142 +6,276 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+/* ======================= GLOBAL ======================= */
 body{
     margin:0;
-    font-family:Poppins, sans-serif;
-    background:#0b1220;
+    font-family:'Poppins', sans-serif;
+    background:#050b18;
     color:white;
+    overflow-x:hidden;
 }
 
-/* HEADER */
-.header{
+/* Animated Gradient Background */
+body::before{
+    content:"";
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:linear-gradient(130deg,#00172b,#020f1f,#051f3b,#000);
+    background-size:400% 400%;
+    animation:moveBG 18s infinite linear;
+    z-index:-1;
+}
+@keyframes moveBG{
+    0%{background-position:0% 0%}
+    50%{background-position:100% 100%}
+    100%{background-position:0% 0%}
+}
+
+/* ======================= HERO WELCOME ======================= */
+
+.hero{
+    text-align:center;
+    margin-top:70px;
+    animation:fadeIn 1.4s ease;
+}
+
+.hero h1{
+    font-size:48px;
+    background:linear-gradient(90deg,#00eaff,#00ffbf);
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:titlePop 1.6s ease-out;
+}
+
+.hero h2{
+    font-size:42px;
+    background:linear-gradient(90deg,#00ffc6,#00aaff);
+    -webkit-background-clip:text;
+    color:transparent;
+    margin-top:-10px;
+    animation:slideUp 1.8s ease-out;
+}
+
+.hero p{
+    margin-top:15px;
+    opacity:.85;
+    font-size:18px;
+    animation:fadeIn 2s ease;
+}
+
+/* Animations */
+@keyframes titlePop{0%{opacity:0;transform:scale(.85)}100%{opacity:1;transform:scale(1)}}
+@keyframes slideUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ======================= MENU ULTRA GLASS TABS ======================= */
+
+.menu{
     display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 40px;
+    justify-content:center;
+    gap:28px;
+    margin-top:40px;
 }
-.logo{
-    font-size:26px;
-    font-weight:700;
-    color:#00eaff;
-}
-.top-links{
-    display:flex;
-    gap:22px;
-}
-.top-links a{
-    color:white;
+
+.menu a{
     text-decoration:none;
+    color:#ffffffdd;
+    padding:14px 26px;
+    backdrop-filter:blur(14px);
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(0,255,255,0.18);
+    border-radius:14px;
     font-weight:600;
-    opacity:.9;
-}
-.top-links a:hover{ color:#00eaff; }
-
-/* MAIN */
-.main{
-    padding:40px;
+    font-size:17px;
+    transition:0.25s ease;
+    box-shadow:0 0 20px rgba(0,255,255,0.15);
+    position:relative;
+    overflow:hidden;
 }
 
-/* QR */
+/* Neon edge glow */
+.menu a::before{
+    content:"";
+    position:absolute;
+    top:0; left:-100%;
+    width:100%; height:100%;
+    background:linear-gradient(90deg, transparent, #00eaff66, transparent);
+    transition:0.35s;
+}
+
+.menu a:hover::before{
+    left:100%;
+}
+
+.menu a:hover{
+    transform:translateY(-6px) scale(1.08);
+    color:#00eaff;
+    box-shadow:0 0 25px #00eaffaa;
+}
+
+/* Floating animation */
+.menu a{
+    animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-6px)}
+    100%{transform:translateY(0)}
+}
+
+/* ======================= QR CARD ======================= */
+
 .qr-box{
-    background:#121a2f;
+    width:340px;
+    margin:55px auto;
     padding:25px;
-    border-radius:18px;
-    width:300px;
+    backdrop-filter:blur(12px);
+    background:rgba(0, 255, 255, 0.06);
+    border:1px solid rgba(0,255,255,0.15);
+    border-radius:20px;
+    box-shadow:0 0 25px #00eaff44;
+    animation:floatCard 4s ease-in-out infinite;
+    text-align:center;
 }
-.qr-box h3{ color:#00ff95; }
+
+@keyframes floatCard{
+    0%{transform:translateY(0px)}
+    50%{transform:translateY(-12px)}
+    100%{transform:translateY(0px)}
+}
+
+.qr-box h3{
+    color:#00ffbf;
+    font-size:22px;
+    margin-bottom:12px;
+}
+
 .qr-box img{
     width:200px;
     height:200px;
-    background:white;
     padding:10px;
-    border-radius:12px;
+    background:white;
+    border-radius:14px;
 }
 
-/* CHAT ICON */
+/* ======================= CHAT BUTTON ======================= */
+
 .chat-icon{
     position:fixed;
     bottom:25px;
     right:25px;
-    width:60px;
-    height:60px;
-    background:#00eaff;
+    width:70px;
+    height:70px;
     border-radius:50%;
+    background:#00eaff;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:26px;
+    font-size:32px;
     cursor:pointer;
     color:#001423;
+    box-shadow:0 0 25px #00eaff;
+    animation:pulse 2s infinite;
+}
+@keyframes pulse{
+    0%{box-shadow:0 0 10px #00eaff}
+    50%{box-shadow:0 0 30px #00eaff}
+    100%{box-shadow:0 0 10px #00eaff}
 }
 
-/* CHAT BOX */
+/* ======================= CHAT BOX ======================= */
+
 .chat-box{
     position:fixed;
-    bottom:95px;
+    bottom:105px;
     right:25px;
-    width:320px;
-    background:#121a2f;
-    border-radius:16px;
+    width:330px;
+    background:rgba(0,25,45,0.75);
+    border:1px solid #00eaff55;
+    border-radius:18px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 0 25px #00eaff55;
     display:none;
     flex-direction:column;
+    overflow:hidden;
+    animation:popChat .4s ease-out;
 }
+@keyframes popChat{
+    0%{transform:scale(.7);opacity:0}
+    100%{transform:scale(1);opacity:1}
+}
+
 .chat-header{
     background:#00eaff;
-    color:#001423;
     padding:12px;
     font-weight:700;
-    border-radius:16px 16px 0 0;
+    color:#001423;
+    text-align:center;
 }
+
 .chat-body{
-    flex:1;
     padding:12px;
     font-size:14px;
+    height:260px;
     overflow-y:auto;
 }
+
 .chat-input{
     display:flex;
-    gap:8px;
     padding:10px;
+    gap:8px;
 }
+
 .chat-input input{
     flex:1;
     padding:8px;
     border-radius:6px;
     border:none;
 }
+
 .chat-input button{
     padding:8px 14px;
     background:#00eaff;
+    color:black;
     border:none;
     border-radius:6px;
-    font-weight:600;
     cursor:pointer;
+    font-weight:600;
+    transition:.2s;
 }
+
+.chat-input button:hover{
+    background:#00c6ff;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="logo">Zenex IT Helpdesk</div>
-    <div class="top-links">
-        <a href="/ticket/new">🎫 Raise Ticket</a>
-        <a href="/track">🔍 Track Ticket</a>
-        <a href="/ai-help">🤖 AI Help</a>
-        <a href="/knowledge-base">📄 Articles</a>
-        <a href="/admin/login">⚙ Admin</a>
-    </div>
+<!-- HERO -->
+<div class="hero">
+    <h1>Welcome to</h1>
+    <h2>Zenex IT Helpdesk</h2>
+    <p>Your one-stop solution for raising tickets, tracking issues<br>and getting instant IT support.</p>
 </div>
 
-<!-- MAIN -->
-<div class="main">
-    <div class="qr-box">
-        <h3>📱 Scan to Raise Ticket</h3>
-        <img src="/qr/ticket" alt="QR Code">
-        <p>Scan QR to open ticket form</p>
-    </div>
+<!-- MENU - NEW ULTRA GLASS MENU -->
+<div class="menu">
+    <a href="/ticket/new">🎫 Raise Ticket</a>
+    <a href="/track">🔍 Track Ticket</a>
+    <a href="/ai-help">🤖 AI Help</a>
+    <a href="/knowledge-base">📄 Articles</a>
+    <a href="/admin/login">⚙ Admin</a>
+</div>
+
+<!-- QR -->
+<div class="qr-box">
+    <h3>📱 Scan to Raise Ticket</h3>
+    <img src="/qr/ticket">
+    <p style="opacity:.8;margin-top:12px">Scan QR to open the ticket form</p>
 </div>
 
 <!-- CHAT ICON -->
@@ -150,12 +284,12 @@ body{
 <!-- CHAT BOX -->
 <div class="chat-box" id="chatBox">
     <div class="chat-header">Chat with IT</div>
-
     <div class="chat-body" id="chatBody"></div>
 
     <div class="chat-input">
         <input type="text" id="empId" placeholder="Employee ID">
     </div>
+
     <div class="chat-input">
         <input type="text" id="msg" placeholder="Type your issue…">
         <button onclick="sendChat()">Send</button>
@@ -164,7 +298,7 @@ body{
 
 <script>
 function toggleChat(){
-    const box=document.getElementById("chatBox");
+    const box = document.getElementById("chatBox");
     box.style.display = box.style.display==="flex" ? "none" : "flex";
 }
 
@@ -187,21 +321,18 @@ function loadChat(emp){
     fetch("/chat/history/"+emp)
         .then(r=>r.json())
         .then(data=>{
-            let box="";
+            let html="";
             data.forEach(m=>{
-                box+=`<div><b>${m.sender}:</b> ${m.message}</div>`;
+                html+=`<div><b>${m.sender}:</b> ${m.message}</div>`;
             });
-            document.getElementById("chatBody").innerHTML=box;
+            document.getElementById("chatBody").innerHTML=html;
         });
 }
 
-document.getElementById("empId").addEventListener("change",e=>{
-    loadChat(e.target.value);
+document.getElementById("empId").addEventListener("change",()=>{
+    loadChat(document.getElementById("empId").value);
 });
 </script>
-<p style="text-align:center; margin-top:30px; color:#888;">
-    © All Rights Reserved -RANJAN PATHAK
-</p>
 
 </body>
 </html>
