@@ -125,11 +125,52 @@ document.getElementById("chatIcon").onclick = () => {
     document.getElementById("chatBox").style.display = "block";
 };
 
-// Auto refresh chat every 2 seconds
-setInterval(()=>{
-    const emp = document.getElementById("empId").value;
-    if(emp) loadChat(emp);
-}, 2000);
+<script>
+
+let stomp = null;
+let empId = null;
+
+document.getElementById("chatIcon").onclick = () => {
+    document.getElementById("chatBox").style.display = "block";
+};
+
+function connectWS() {
+    if (stomp) return;
+
+    let socket = new SockJS('/chat-support');
+    stomp = Stomp.over(socket);
+
+    stomp.connect({}, () => {
+        stomp.subscribe("/topic/chat/" + empId, (msg) => {
+            let m = JSON.parse(msg.body);
+
+            if (m.sender === "ADMIN") {
+                messages.innerHTML += `<div class="msg-admin">${m.message}</div>`;
+            } else {
+                messages.innerHTML += `<div class="msg-user">${m.message}</div>`;
+            }
+
+            messages.scrollTop = messages.scrollHeight;
+        });
+    });
+}
+
+function sendChat() {
+    empId = document.getElementById("empId").value;
+    let msg = document.getElementById("msg").value;
+
+    if (!empId || !msg) return;
+
+    connectWS();
+
+    stomp.send("/app/chat.send", {}, JSON.stringify({
+        employeeId: empId,
+        sender: "USER",
+        message: msg
+    }));
+
+    document.getElementById("msg").value = "";
+}
 
 </script>
 
