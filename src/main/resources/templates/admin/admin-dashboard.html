@@ -30,18 +30,27 @@ body{
 /* MAIN */
 .main{margin-left:260px;padding:30px}
 
-/* CHAT */
+/* CHAT BOX */
 #adminChat{
     position:fixed;right:20px;bottom:20px;
     width:320px;background:#121a2f;
     border-radius:14px;overflow:hidden;
+    box-shadow:0 0 15px rgba(0,0,0,.6);
 }
 #chatArea{
     height:220px;overflow-y:auto;
     padding:8px;font-size:13px;
 }
-.msg-admin{color:#00eaff}
-.msg-user{color:#ffea76}
+.msg-admin{
+    color:#00eaff;margin:6px 0;
+    background:#00eaff22;padding:6px;
+    border-radius:6px;display:inline-block;
+}
+.msg-user{
+    color:#ffea76;margin:6px 0;
+    background:#ffea7622;padding:6px;
+    border-radius:6px;display:inline-block;
+}
 </style>
 </head>
 
@@ -77,52 +86,56 @@ body{
             <input id="adminMsg" placeholder="Reply..."
             style="flex:1;padding:6px;border-radius:6px;border:none">
             <button onclick="sendAdmin()" style="
-            background:#00eaff;border:none;padding:6px 10px;
-            border-radius:6px;font-weight:600">Send</button>
+                background:#00eaff;border:none;padding:6px 10px;
+                border-radius:6px;font-weight:600">Send</button>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<!-- ************* FIXED REST CHAT JS *************** -->
 
 <script>
-let stomp=null;
-let currentEmp=null;
+let currentEmp = null;
 
-function connect(){
-    if(stomp) return;
-    let socket=new SockJS("/chat-support");
-    stomp=Stomp.over(socket);
-    stomp.connect({},()=>{});
-}
+/* When admin enters employee ID */
+document.getElementById("empId").addEventListener("change", () => {
+    currentEmp = empId.value.trim();
+    if (!currentEmp) return;
 
-document.getElementById("empId").addEventListener("change",()=>{
-    connect();
-    currentEmp=empId.value;
-
-    stomp.subscribe("/topic/chat/"+currentEmp,(m)=>{
-        let d=JSON.parse(m.body);
-        chatArea.innerHTML+=
-        `<div class="${d.sender==='ADMIN'?'msg-admin':'msg-user'}">
-         <b>${d.sender}:</b> ${d.message}</div>`;
-        chatArea.scrollTop=chatArea.scrollHeight;
-    });
+    loadHistory();
 });
 
-function sendAdmin(){
-    if(!currentEmp||!adminMsg.value) return;
-    connect();
+/* Load chat history from backend */
+function loadHistory() {
+    fetch(`/chat/history/${currentEmp}`)
+        .then(r => r.json())
+        .then(list => {
+            chatArea.innerHTML = "";
+            list.forEach(m => {
+                chatArea.innerHTML += `
+                    <div class="${m.sender === 'ADMIN' ? 'msg-admin' : 'msg-user'}">
+                        <b>${m.sender}:</b> ${m.message}
+                    </div>`;
+            });
+            chatArea.scrollTop = chatArea.scrollHeight;
+        });
+}
 
-    stomp.send("/app/chat.send",{},JSON.stringify({
-        employeeId:currentEmp,
-        sender:"ADMIN",
-        message:adminMsg.value
-    }));
-    adminMsg.value="";
+/* Send admin reply */
+function sendAdmin() {
+    if (!currentEmp || !adminMsg.value.trim()) return;
+
+    fetch("/chat/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `employeeId=${currentEmp}&message=${encodeURIComponent(adminMsg.value)}&sender=ADMIN`
+    }).then(() => {
+        adminMsg.value = "";
+        loadHistory();
+    });
 }
 </script>
 
 </body>
 </html>
-
