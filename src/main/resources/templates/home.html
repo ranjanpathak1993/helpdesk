@@ -7,7 +7,7 @@
 
 <style>
 
-/* ======================= GLOBAL ======================= */
+/* ================= GLOBAL ================= */
 body{
     margin:0;
     font-family:'Poppins', sans-serif;
@@ -16,143 +16,138 @@ body{
     overflow-x:hidden;
 }
 
-/* Animated Gradient Background */
 body::before{
     content:"";
     position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
+    top:0;left:0;
+    width:100%;height:100%;
     background:linear-gradient(130deg,#00172b,#020f1f,#051f3b,#000);
     background-size:400% 400%;
-    animation:moveBG 18s infinite linear;
+    animation:bgMove 18s infinite linear;
     z-index:-1;
 }
-@keyframes moveBG{
+@keyframes bgMove{
     0%{background-position:0% 0%}
     50%{background-position:100% 100%}
     100%{background-position:0% 0%}
 }
 
-/* ======================= HERO WELCOME ======================= */
-
+/* ================= HERO (ULTRA PREMIUM) ================= */
 .hero{
     text-align:center;
-    margin-top:70px;
-    animation:fadeIn 1.4s ease;
+    margin-top:60px;
 }
 
 .hero h1{
-    font-size:48px;
-    background:linear-gradient(90deg,#00eaff,#00ffbf);
+    font-size:58px;
+    font-weight:800;
+    letter-spacing:1px;
+    background:radial-gradient(circle,#00eaff,#00ffc6,#00aaff);
     -webkit-background-clip:text;
     color:transparent;
-    animation:titlePop 1.6s ease-out;
+    filter:drop-shadow(0 0 18px #00eaffaa);
+    animation:popIn 1.5s ease;
 }
 
 .hero h2{
-    font-size:42px;
-    background:linear-gradient(90deg,#00ffc6,#00aaff);
-    -webkit-background-clip:text;
-    color:transparent;
-    margin-top:-10px;
-    animation:slideUp 1.8s ease-out;
+    font-size:48px;
+    font-weight:700;
+    margin-top:-15px;
+    color:#00ffc6;
+    text-shadow:0 0 22px #00ffc644;
+    animation:slideUp 1.8s ease;
 }
 
 .hero p{
-    margin-top:15px;
+    margin-top:18px;
     opacity:.85;
-    font-size:18px;
+    font-size:20px;
     animation:fadeIn 2s ease;
 }
 
-/* Animations */
-@keyframes titlePop{0%{opacity:0;transform:scale(.85)}100%{opacity:1;transform:scale(1)}}
-@keyframes slideUp{0%{opacity:0;transform:translateY(25px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{
+    0%{opacity:0;transform:scale(.7);}
+    100%{opacity:1;transform:scale(1);}
+}
+@keyframes slideUp{
+    0%{opacity:0;transform:translateY(35px);}
+    100%{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
 
-/* ======================= MENU ULTRA GLASS TABS ======================= */
-
+/* ================= MENU (GLASS TABS) ================= */
 .menu{
     display:flex;
     justify-content:center;
-    gap:28px;
-    margin-top:40px;
+    gap:30px;
+    margin-top:35px;
+    flex-wrap:wrap;
 }
-
 .menu a{
     text-decoration:none;
-    color:#ffffffdd;
     padding:14px 26px;
-    backdrop-filter:blur(14px);
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(0,255,255,0.18);
-    border-radius:14px;
-    font-weight:600;
+    border-radius:16px;
     font-size:17px;
-    transition:0.25s ease;
+    font-weight:600;
+    color:#ffffffdd;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(0,255,255,0.12);
+    transition:.28s;
     box-shadow:0 0 20px rgba(0,255,255,0.15);
-    position:relative;
-    overflow:hidden;
 }
-
-/* Neon edge glow */
-.menu a::before{
-    content:"";
-    position:absolute;
-    top:0; left:-100%;
-    width:100%; height:100%;
-    background:linear-gradient(90deg, transparent, #00eaff66, transparent);
-    transition:0.35s;
-}
-
-.menu a:hover::before{
-    left:100%;
-}
-
 .menu a:hover{
-    transform:translateY(-6px) scale(1.08);
+    transform:translateY(-6px) scale(1.07);
+    background:rgba(0,255,255,0.18);
     color:#00eaff;
     box-shadow:0 0 25px #00eaffaa;
 }
 
-/* Floating animation */
-.menu a{
-    animation:float 4s ease-in-out infinite;
+/* ================= 2-BOX GRID ================= */
+.section{
+    width:92%;
+    margin:60px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+
+    /* MOBILE SUPPORT */
 }
-@keyframes float{
-    0%{transform:translateY(0)}
-    50%{transform:translateY(-6px)}
-    100%{transform:translateY(0)}
+@media(max-width:850px){
+    .section{
+        grid-template-columns:1fr;
+    }
 }
 
-/* ======================= QR CARD ======================= */
-
-.qr-box{
-    width:340px;
-    margin:55px auto;
-    padding:25px;
-    backdrop-filter:blur(12px);
-    background:rgba(0, 255, 255, 0.06);
-    border:1px solid rgba(0,255,255,0.15);
+/* BOX SAME SIZE BOTH */
+.box{
+    height:380px;
+    padding:22px;
     border-radius:20px;
-    box-shadow:0 0 25px #00eaff44;
+    backdrop-filter:blur(14px);
+    background:rgba(0,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.15);
+    box-shadow:0 0 25px #00eaff55;
     animation:floatCard 4s ease-in-out infinite;
     text-align:center;
 }
-
 @keyframes floatCard{
-    0%{transform:translateY(0px)}
-    50%{transform:translateY(-12px)}
-    100%{transform:translateY(0px)}
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-12px);}
+    100%{transform:translateY(0);}
 }
 
-.qr-box h3{
+.box h3{
+    font-size:24px;
     color:#00ffbf;
-    font-size:22px;
-    margin-bottom:12px;
+    margin-bottom:15px;
 }
 
-.qr-box img{
+/* QR */
+.box img{
     width:200px;
     height:200px;
     padding:10px;
@@ -160,19 +155,24 @@ body::before{
     border-radius:14px;
 }
 
-/* ======================= CHAT BUTTON ======================= */
+/* VIDEO SAME SIZE */
+.video-box video{
+    width:100%;
+    height:250px;
+    border-radius:14px;
+    background:black;
+}
+
+/* ================= CHAT ================ */
 
 .chat-icon{
     position:fixed;
     bottom:25px;
     right:25px;
-    width:70px;
-    height:70px;
+    width:70px;height:70px;
     border-radius:50%;
     background:#00eaff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display:flex;align-items:center;justify-content:center;
     font-size:32px;
     cursor:pointer;
     color:#001423;
@@ -185,39 +185,28 @@ body::before{
     100%{box-shadow:0 0 10px #00eaff}
 }
 
-/* ======================= CHAT BOX ======================= */
-
 .chat-box{
     position:fixed;
-    bottom:105px;
-    right:25px;
+    bottom:105px;right:25px;
     width:330px;
     background:rgba(0,25,45,0.75);
     border:1px solid #00eaff55;
     border-radius:18px;
     backdrop-filter:blur(12px);
-    box-shadow:0 0 25px #00eaff55;
     display:none;
     flex-direction:column;
-    overflow:hidden;
-    animation:popChat .4s ease-out;
-}
-@keyframes popChat{
-    0%{transform:scale(.7);opacity:0}
-    100%{transform:scale(1);opacity:1}
 }
 
 .chat-header{
     background:#00eaff;
+    color:#001423;
     padding:12px;
     font-weight:700;
-    color:#001423;
     text-align:center;
 }
 
 .chat-body{
     padding:12px;
-    font-size:14px;
     height:260px;
     overflow-y:auto;
 }
@@ -227,27 +216,15 @@ body::before{
     padding:10px;
     gap:8px;
 }
-
 .chat-input input{
-    flex:1;
-    padding:8px;
-    border-radius:6px;
-    border:none;
+    flex:1;padding:8px;border:none;border-radius:6px;
 }
-
 .chat-input button{
     padding:8px 14px;
     background:#00eaff;
-    color:black;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
+    border:none;border-radius:6px;
     font-weight:600;
-    transition:.2s;
-}
-
-.chat-input button:hover{
-    background:#00c6ff;
+    cursor:pointer;
 }
 
 </style>
@@ -262,7 +239,7 @@ body::before{
     <p>Your one-stop solution for raising tickets, tracking issues<br>and getting instant IT support.</p>
 </div>
 
-<!-- MENU - NEW ULTRA GLASS MENU -->
+<!-- MENU -->
 <div class="menu">
     <a href="/ticket/new">🎫 Raise Ticket</a>
     <a href="/track">🔍 Track Ticket</a>
@@ -271,11 +248,25 @@ body::before{
     <a href="/admin/login">⚙ Admin</a>
 </div>
 
-<!-- QR -->
-<div class="qr-box">
-    <h3>📱 Scan to Raise Ticket</h3>
-    <img src="/qr/ticket">
-    <p style="opacity:.8;margin-top:12px">Scan QR to open the ticket form</p>
+<!-- 2 BOX GRID -->
+<div class="section">
+
+    <!-- QR -->
+    <div class="box">
+        <h3>📱 Scan to Raise Ticket</h3>
+        <img src="/qr/ticket">
+        <p style="opacity:.8;margin-top:14px">Scan to open ticket form</p>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="box video-box">
+        <h3>🎥 Quick Help Guide</h3>
+        <video autoplay muted loop>
+            <source src="/videos/helpdesk.mp4" type="video/mp4">
+        </video>
+        <p style="opacity:.8;margin-top:12px">Learn how to raise & track tickets.</p>
+    </div>
+
 </div>
 
 <!-- CHAT ICON -->
@@ -298,8 +289,8 @@ body::before{
 
 <script>
 function toggleChat(){
-    const box = document.getElementById("chatBox");
-    box.style.display = box.style.display==="flex" ? "none" : "flex";
+    const c=document.getElementById("chatBox");
+    c.style.display = c.style.display==="flex"?"none":"flex";
 }
 
 function sendChat(){
@@ -320,18 +311,14 @@ function sendChat(){
 function loadChat(emp){
     fetch("/chat/history/"+emp)
         .then(r=>r.json())
-        .then(data=>{
+        .then(list=>{
             let html="";
-            data.forEach(m=>{
+            list.forEach(m=>{
                 html+=`<div><b>${m.sender}:</b> ${m.message}</div>`;
             });
-            document.getElementById("chatBody").innerHTML=html;
+            chatBody.innerHTML=html;
         });
 }
-
-document.getElementById("empId").addEventListener("change",()=>{
-    loadChat(document.getElementById("empId").value);
-});
 </script>
 
 </body>
