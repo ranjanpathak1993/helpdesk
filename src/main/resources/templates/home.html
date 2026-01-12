@@ -37,6 +37,8 @@ body::before{
 .hero{
     text-align:center;
     margin-top:60px;
+    position:relative;  /* safety so it stays above bg */
+    z-index:2;
 }
 
 .hero h1{
@@ -86,6 +88,8 @@ body::before{
     gap:30px;
     margin-top:35px;
     flex-wrap:wrap;
+    position:relative;   /* ensure above any embeds */
+    z-index:2;
 }
 .menu a{
     text-decoration:none;
@@ -114,8 +118,8 @@ body::before{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:50px;
-
-    /* MOBILE SUPPORT */
+    position:relative;
+    z-index:1;
 }
 @media(max-width:850px){
     .section{
@@ -123,9 +127,9 @@ body::before{
     }
 }
 
-/* BOX SAME SIZE BOTH */
+/* BOX HALF SIZE (only height) */
 .box{
-    height:380px;
+    height:190px;                 /* 380 -> 190 (half) */
     padding:22px;
     border-radius:20px;
     backdrop-filter:blur(14px);
@@ -134,6 +138,7 @@ body::before{
     box-shadow:0 0 25px #00eaff55;
     animation:floatCard 4s ease-in-out infinite;
     text-align:center;
+    overflow:hidden;              /* keep contents inside */
 }
 @keyframes floatCard{
     0%{transform:translateY(0);}
@@ -142,39 +147,38 @@ body::before{
 }
 
 .box h3{
-    font-size:24px;
+    font-size:20px;               /* slightly compact */
     color:#00ffbf;
-    margin-bottom:15px;
+    margin-bottom:8px;
 }
 
-/* QR */
+/* QR HALF SIZE */
 .box img{
-    width:200px;
-    height:200px;
-    padding:10px;
+    width:100px;                  /* 200 -> 100 */
+    height:100px;                 /* 200 -> 100 */
+    padding:8px;
     background:white;
     border-radius:14px;
 }
 
-/* VIDEO (YouTube embed) */
-.video-box .embed-wrap{
-    position:relative;
+/* ORIGINAL video style kept (unused when iframe present) */
+.video-box video{
     width:100%;
-    /* 16:9 ratio */
-    padding-top:56.25%;
+    height:125px;                 /* match half height if ever used */
     border-radius:14px;
-    overflow:hidden;
     background:black;
-    box-shadow:0 0 0 0 transparent; /* keep clean */
 }
+
+/* YouTube iframe — safe, half height, no overlap */
 .video-box iframe{
-    position:absolute;
-    top:0;left:0;
+    display:block;
     width:100%;
-    height:100%;
+    height:125px;                 /* 250 -> 125 (half) */
     border:0;
     border-radius:14px;
-    /* for subtle glow similar to other cards */
+    background:black;
+    position:relative;
+    z-index:0;
     box-shadow:0 0 25px #00eaff22;
 }
 
@@ -210,6 +214,7 @@ body::before{
     backdrop-filter:blur(12px);
     display:none;
     flex-direction:column;
+    z-index:3;   /* stays above page */
 }
 
 .chat-header{
@@ -256,10 +261,10 @@ body::before{
 
 <!-- MENU -->
 <div class="menu">
-    <a href="/ticket/newTicket</a>
-    <a href="/trackTicket</a>
-    <a href="/ai-helpp</a>
-    <a href="/-base📄 Articles</a>
+    /ticket/new🎫 Raise Ticket</a>
+    /track🔍 Track Ticket</a>
+    /ai-help🤖 AI Help</a>
+    /knowledge-base📄 Articles</a>
     /admin/login⚙ Admin</a>
 </div>
 
@@ -270,20 +275,24 @@ body::before{
     <div class="box">
         <h3>📱 Scan to Raise Ticket</h3>
         /qr/ticket
-        <p style="opacity:.8;margin-top:14px">Scan to open ticket form</p>
+        <p style="opacity:.8;margin-top:8px">Scan to open ticket form</p>
     </div>
 
     <!-- VIDEO -->
     <div class="box video-box">
         <h3>🎥 Quick Help Guide</h3>
 
-        <!-- Responsive YouTube Embed (playlist / video) -->
-        <div class="embed-wrap">
-            <iframe
-              src="https://www.youtube.com/embed/inWWhr5tnEA?list=PLEiEAq2VkUUJfPOj5nRounXvf3n17PCft&rel=0&autoplay=1&mute=1"
-                title="Quick Help Guide"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-ck="toggleChat()">💬</div>
+        <!-- REPLACED: Use YouTube embed (half height) -->
+        https://www.youtube.com/embed/inWWhr5tnEA?list=PLEiEAq2VkUUJfPOj5nRounXvf3n17PCft&rel=0
+        </iframe>
+
+        <p style="opacity:.8;margin-top:8px">Learn how to raise &amp; track tickets.</p>
+    </div>
+
+</div>
+
+<!-- CHAT ICON -->
+<div class="chat-icon" onclick="toggleChat()">💬</div>
 
 <!-- CHAT BOX -->
 <div class="chat-box" id="chatBox">
