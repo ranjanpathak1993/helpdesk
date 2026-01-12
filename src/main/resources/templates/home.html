@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
 /* ================= GLOBAL ================= */
 body{
     margin:0;
@@ -33,219 +31,147 @@ body::before{
     100%{background-position:0% 0%}
 }
 
-/* ================= HERO (ULTRA PREMIUM) ================= */
+/* ================= HERO ================= */
 .hero{
     text-align:center;
-    margin-top:60px;
-    position:relative;  /* safety so it stays above bg */
-    z-index:2;
+    margin-top:40px; /* थोड़ा कम किया */
 }
 
 .hero h1{
-    font-size:58px;
+    font-size:48px; /* साइज एडजस्ट किया */
     font-weight:800;
-    letter-spacing:1px;
+    margin: 0;
     background:radial-gradient(circle,#00eaff,#00ffc6,#00aaff);
     -webkit-background-clip:text;
     color:transparent;
     filter:drop-shadow(0 0 18px #00eaffaa);
-    animation:popIn 1.5s ease;
 }
 
 .hero h2{
-    font-size:48px;
+    font-size:38px;
     font-weight:700;
-    margin-top:-15px;
+    margin-top:-5px;
     color:#00ffc6;
-    text-shadow:0 0 22px #00ffc644;
-    animation:slideUp 1.8s ease;
 }
 
 .hero p{
-    margin-top:18px;
+    margin-top:10px;
     opacity:.85;
-    font-size:20px;
-    animation:fadeIn 2s ease;
+    font-size:18px;
 }
 
-@keyframes popIn{
-    0%{opacity:0;transform:scale(.7);}
-    100%{opacity:1;transform:scale(1);}
-}
-@keyframes slideUp{
-    0%{opacity:0;transform:translateY(35px);}
-    100%{opacity:1;transform:translateY(0);}
-}
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
-}
-
-/* ================= MENU (GLASS TABS) ================= */
+/* ================= MENU ================= */
 .menu{
     display:flex;
     justify-content:center;
-    gap:30px;
-    margin-top:35px;
+    gap:15px;
+    margin-top:25px;
     flex-wrap:wrap;
-    position:relative;   /* ensure above any embeds */
-    z-index:2;
 }
 .menu a{
     text-decoration:none;
-    padding:14px 26px;
-    border-radius:16px;
-    font-size:17px;
+    padding:10px 20px;
+    border-radius:12px;
+    font-size:15px;
     font-weight:600;
     color:#ffffffdd;
     background:rgba(255,255,255,0.08);
     backdrop-filter:blur(12px);
     border:1px solid rgba(0,255,255,0.12);
     transition:.28s;
-    box-shadow:0 0 20px rgba(0,255,255,0.15);
 }
 .menu a:hover{
-    transform:translateY(-6px) scale(1.07);
+    transform:translateY(-3px);
     background:rgba(0,255,255,0.18);
     color:#00eaff;
-    box-shadow:0 0 25px #00eaffaa;
 }
 
-/* ================= 2-BOX GRID ================= */
+/* ================= 2-BOX GRID (RESIZED) ================= */
 .section{
-    width:92%;
-    margin:60px auto;
+    width:85%;
+    max-width:1000px; /* लैपटॉप पर ज्यादा न फैले */
+    margin:40px auto;
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:50px;
-    position:relative;
-    z-index:1;
-}
-@media(max-width:850px){
-    .section{
-        grid-template-columns:1fr;
-    }
+    grid-template-columns: 1fr 1fr;
+    gap:30px;
 }
 
-/* BOX HALF SIZE (only height) */
-.box{
-    height:190px;                 /* 380 -> 190 (half) */
-    padding:22px;
-    border-radius:20px;
-    backdrop-filter:blur(14px);
-    background:rgba(0,255,255,0.08);
-    border:1px solid rgba(0,255,255,0.15);
-    box-shadow:0 0 25px #00eaff55;
-    animation:floatCard 4s ease-in-out infinite;
-    text-align:center;
-    overflow:hidden;              /* keep contents inside */
+@media(max-width:850px){
+    .section{ grid-template-columns:1fr; width: 95%; }
 }
-@keyframes floatCard{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-12px);}
-    100%{transform:translateY(0);}
+
+/* BOX SIZE REDUCED */
+.box{
+    height: 320px; /* हाइट कम की गई */
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(14px);
+    background: rgba(0,255,255,0.05);
+    border: 1px solid rgba(0,255,255,0.15);
+    box-shadow: 0 0 20px #00eaff33;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .box h3{
-    font-size:20px;               /* slightly compact */
-    color:#00ffbf;
-    margin-bottom:8px;
+    font-size: 20px;
+    color: #00ffbf;
+    margin-top: 0;
+    margin-bottom: 15px;
 }
 
-/* QR HALF SIZE */
+/* QR SIZE */
 .box img{
-    width:100px;                  /* 200 -> 100 */
-    height:100px;                 /* 200 -> 100 */
-    padding:8px;
-    background:white;
-    border-radius:14px;
+    width: 150px; /* QR छोटा किया */
+    height: 150px;
+    padding: 8px;
+    background: white;
+    border-radius: 10px;
 }
 
-/* ORIGINAL video style kept (unused when iframe present) */
-.video-box video{
-    width:100%;
-    height:125px;                 /* match half height if ever used */
-    border-radius:14px;
-    background:black;
-}
-
-/* YouTube iframe — safe, half height, no overlap */
-.video-box iframe{
-    display:block;
-    width:100%;
-    height:125px;                 /* 250 -> 125 (half) */
-    border:0;
-    border-radius:14px;
-    background:black;
-    position:relative;
-    z-index:0;
-    box-shadow:0 0 25px #00eaff22;
+/* YOUTUBE VIDEO CONTAINER */
+.video-box iframe {
+    width: 100%;
+    height: 180px; /* वीडियो की हाइट सेट की */
+    border-radius: 12px;
+    border: none;
+    background: #000;
 }
 
 /* ================= CHAT ================ */
-
 .chat-icon{
     position:fixed;
-    bottom:25px;
-    right:25px;
-    width:70px;height:70px;
+    bottom:25px; right:25px;
+    width:60px; height:60px;
     border-radius:50%;
     background:#00eaff;
-    display:flex;align-items:center;justify-content:center;
-    font-size:32px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
     cursor:pointer;
-    color:#001423;
-    box-shadow:0 0 25px #00eaff;
-    animation:pulse 2s infinite;
-}
-@keyframes pulse{
-    0%{box-shadow:0 0 10px #00eaff}
-    50%{box-shadow:0 0 30px #00eaff}
-    100%{box-shadow:0 0 10px #00eaff}
+    box-shadow:0 0 15px #00eaff;
 }
 
 .chat-box{
     position:fixed;
-    bottom:105px;right:25px;
-    width:330px;
-    background:rgba(0,25,45,0.75);
+    bottom:100px; right:25px;
+    width:300px;
+    background:rgba(5, 15, 30, 0.95);
     border:1px solid #00eaff55;
-    border-radius:18px;
-    backdrop-filter:blur(12px);
+    border-radius:15px;
+    backdrop-filter:blur(15px);
     display:none;
     flex-direction:column;
-    z-index:3;   /* stays above page */
+    z-index: 100;
 }
 
-.chat-header{
-    background:#00eaff;
-    color:#001423;
-    padding:12px;
-    font-weight:700;
-    text-align:center;
-}
-
-.chat-body{
-    padding:12px;
-    height:260px;
-    overflow-y:auto;
-}
-
-.chat-input{
-    display:flex;
-    padding:10px;
-    gap:8px;
-}
-.chat-input input{
-    flex:1;padding:8px;border:none;border-radius:6px;
-}
-.chat-input button{
-    padding:8px 14px;
-    background:#00eaff;
-    border:none;border-radius:6px;
-    font-weight:600;
-    cursor:pointer;
-}
+.chat-header{ background:#00eaff; color:#000; padding:10px; font-weight:bold; border-radius:15px 15px 0 0; text-align:center; }
+.chat-body{ padding:10px; height:200px; overflow-y:auto; font-size: 14px; }
+.chat-input{ display:flex; padding:10px; gap:5px; }
+.chat-input input{ flex:1; padding:8px; border-radius:5px; border:none; }
+.chat-input button{ background:#00eaff; border:none; padding:8px; cursor:pointer; border-radius:5px; font-weight:bold; }
 
 </style>
 </head>
@@ -256,37 +182,38 @@ body::before{
 <div class="hero">
     <h1>Welcome to</h1>
     <h2>Zenex IT Helpdesk</h2>
-    <p>Your one-stop solution for raising tickets, tracking issues<br>and getting instant IT support.</p>
+    <p>Your one-stop solution for IT support.</p>
 </div>
 
 <!-- MENU -->
 <div class="menu">
-    /ticket/new🎫 Raise Ticket</a>
-    /track🔍 Track Ticket</a>
-    /ai-help🤖 AI Help</a>
-    /knowledge-base📄 Articles</a>
-    /admin/login⚙ Admin</a>
+    <a href="/ticket/new">🎫 Raise Ticket</a>
+    <a href="/track">🔍 Track Ticket</a>
+    <a href="/ai-help">🤖 AI Help</a>
+    <a href="/knowledge-base">📄 Articles</a>
+    <a href="/admin/login">⚙ Admin</a>
 </div>
 
 <!-- 2 BOX GRID -->
 <div class="section">
 
-    <!-- QR -->
+    <!-- QR BOX -->
     <div class="box">
         <h3>📱 Scan to Raise Ticket</h3>
-        /qr/ticket
-        <p style="opacity:.8;margin-top:8px">Scan to open ticket form</p>
+        <img src="/qr/ticket" alt="QR Code">
+        <p style="opacity:.8; margin-top:10px; font-size:14px;">Scan to open ticket form</p>
     </div>
 
-    <!-- VIDEO -->
+    <!-- VIDEO BOX (YOUTUBE ADDED) -->
     <div class="box video-box">
         <h3>🎥 Quick Help Guide</h3>
-
-        <!-- REPLACED: Use YouTube embed (half height) -->
-        https://www.youtube.com/embed/inWWhr5tnEA?list=PLEiEAq2VkUUJfPOj5nRounXvf3n17PCft&rel=0
+        <!-- YouTube Link Integrated here -->
+        <iframe src="www.youtube.com" 
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
         </iframe>
-
-        <p style="opacity:.8;margin-top:8px">Learn how to raise &amp; track tickets.</p>
+        <p style="opacity:.8; margin-top:10px; font-size:14px;">Learn how to use the portal.</p>
     </div>
 
 </div>
@@ -298,11 +225,7 @@ body::before{
 <div class="chat-box" id="chatBox">
     <div class="chat-header">Chat with IT</div>
     <div class="chat-body" id="chatBody"></div>
-
-    <div class="chat-input">
-        <input type="text" id="empId" placeholder="Employee ID">
-    </div>
-
+    <div class="chat-input"><input type="text" id="empId" placeholder="Employee ID"></div>
     <div class="chat-input">
         <input type="text" id="msg" placeholder="Type your issue…">
         <button onclick="sendChat()">Send</button>
@@ -338,7 +261,7 @@ function loadChat(emp){
             list.forEach(m=>{
                 html+=`<div><b>${m.sender}:</b> ${m.message}</div>`;
             });
-            chatBody.innerHTML=html;
+            document.getElementById("chatBody").innerHTML=html;
         });
 }
 </script>
