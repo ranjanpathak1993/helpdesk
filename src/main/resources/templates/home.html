@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,12 +156,26 @@ body::before{
     border-radius:14px;
 }
 
-/* VIDEO SAME SIZE */
-.video-box video{
+/* VIDEO (YouTube embed) */
+.video-box .embed-wrap{
+    position:relative;
     width:100%;
-    height:250px;
+    /* 16:9 ratio */
+    padding-top:56.25%;
     border-radius:14px;
+    overflow:hidden;
     background:black;
+    box-shadow:0 0 0 0 transparent; /* keep clean */
+}
+.video-box iframe{
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    border:0;
+    border-radius:14px;
+    /* for subtle glow similar to other cards */
+    box-shadow:0 0 25px #00eaff22;
 }
 
 /* ================= CHAT ================ */
@@ -241,11 +256,11 @@ body::before{
 
 <!-- MENU -->
 <div class="menu">
-    <a href="/ticket/new">🎫 Raise Ticket</a>
-    <a href="/track">🔍 Track Ticket</a>
-    <a href="/ai-help">🤖 AI Help</a>
-    <a href="/knowledge-base">📄 Articles</a>
-    <a href="/admin/login">⚙ Admin</a>
+    <a href="/ticket/newTicket</a>
+    <a href="/trackTicket</a>
+    <a href="/ai-helpp</a>
+    <a href="/-base📄 Articles</a>
+    /admin/login⚙ Admin</a>
 </div>
 
 <!-- 2 BOX GRID -->
@@ -254,23 +269,21 @@ body::before{
     <!-- QR -->
     <div class="box">
         <h3>📱 Scan to Raise Ticket</h3>
-        <img src="/qr/ticket">
+        /qr/ticket
         <p style="opacity:.8;margin-top:14px">Scan to open ticket form</p>
     </div>
 
     <!-- VIDEO -->
     <div class="box video-box">
         <h3>🎥 Quick Help Guide</h3>
-        <video autoplay muted loop>
-            <source src="/videos/helpdesk.mp4" type="video/mp4">
-        </video>
-        <p style="opacity:.8;margin-top:12px">Learn how to raise & track tickets.</p>
-    </div>
 
-</div>
-
-<!-- CHAT ICON -->
-<div class="chat-icon" onclick="toggleChat()">💬</div>
+        <!-- Responsive YouTube Embed (playlist / video) -->
+        <div class="embed-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/inWWhr5tnEA?list=PLEiEAq2VkUUJfPOj5nRounXvf3n17PCft&rel=0&autoplay=1&mute=1"
+                title="Quick Help Guide"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+ck="toggleChat()">💬</div>
 
 <!-- CHAT BOX -->
 <div class="chat-box" id="chatBox">
