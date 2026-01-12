@@ -34,11 +34,11 @@ body::before{
 /* ================= HERO (ANIMATIONS) ================= */
 .hero{
     text-align:center;
-    margin-top:40px;
+    margin-top:50px;
 }
 
 .hero h1{
-    font-size:50px;
+    font-size:52px;
     font-weight:800;
     margin:0;
     background:radial-gradient(circle,#00eaff,#00ffc6,#00aaff);
@@ -49,7 +49,7 @@ body::before{
 }
 
 .hero h2{
-    font-size:40px;
+    font-size:42px;
     font-weight:700;
     margin-top:-10px;
     color:#00ffc6;
@@ -58,7 +58,7 @@ body::before{
 }
 
 .hero p{
-    margin-top:10px;
+    margin-top:15px;
     opacity:.85;
     font-size:18px;
     animation:fadeIn 2.5s ease forwards;
@@ -81,15 +81,15 @@ body::before{
 .menu{
     display:flex;
     justify-content:center;
-    gap:15px;
+    gap:20px;
     margin-top:30px;
     flex-wrap:wrap;
 }
 .menu a{
     text-decoration:none;
-    padding:10px 20px;
-    border-radius:12px;
-    font-size:15px;
+    padding:12px 22px;
+    border-radius:14px;
+    font-size:16px;
     font-weight:600;
     color:#ffffffdd;
     background:rgba(255,255,255,0.08);
@@ -104,30 +104,26 @@ body::before{
     box-shadow:0 0 20px #00eaffaa;
 }
 
-/* ================= 2-BOX GRID (RESIZED & ANIMATED) ================= */
+/* ================= 2-BOX GRID (DESKTOP) ================= */
 .section{
-    width:85%;
-    max-width:900px;
-    margin:40px auto;
+    width:88%;
+    max-width:1000px;
+    margin:50px auto;
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap:30px;
-}
-
-@media(max-width:850px){
-    .section{ grid-template-columns:1fr; }
+    gap:40px;
 }
 
 .box{
-    height: 300px; /* छोटा साइज */
-    padding: 20px;
+    height: 360px; /* अच्छा साइज */
+    padding: 25px;
     border-radius: 20px;
     backdrop-filter: blur(14px);
     background: rgba(0,255,255,0.08);
     border: 1px solid rgba(0,255,255,0.15);
     box-shadow: 0 0 25px #00eaff44;
     text-align: center;
-    animation: floatCard 4s ease-in-out infinite; /* फ्लोटिंग एनीमेशन */
+    animation: floatCard 4s ease-in-out infinite;
 }
 
 @keyframes floatCard{
@@ -137,25 +133,23 @@ body::before{
 }
 
 .box h3{
-    font-size: 20px;
+    font-size: 24px;
     color: #00ffbf;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-/* QR SIZE */
 .box img{
-    width: 140px;
-    height: 140px;
-    padding: 8px;
+    width: 180px;
+    height: 180px;
+    padding: 10px;
     background: white;
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
-/* YOUTUBE PLAYER */
 .video-box iframe {
     width: 100%;
-    height: 170px; /* बॉक्स के अंदर फिट */
+    height: 220px;
     border-radius: 12px;
     border: none;
     background: #000;
@@ -165,40 +159,72 @@ body::before{
 .chat-icon{
     position:fixed;
     bottom:25px; right:25px;
-    width:60px; height:60px;
+    width:70px; height:70px;
     border-radius:50%;
     background:#00eaff;
     display:flex; align-items:center; justify-content:center;
-    font-size:28px;
+    font-size:32px;
     cursor:pointer;
-    box-shadow:0 0 15px #00eaff;
+    box-shadow:0 0 25px #00eaff;
 }
 
 .chat-box{
     position:fixed;
-    bottom:95px; right:25px;
-    width:300px;
+    bottom:100px; right:25px;
+    width:330px;
     background:rgba(5, 15, 30, 0.95);
     border:1px solid #00eaff55;
-    border-radius:15px;
+    border-radius:18px;
     backdrop-filter:blur(12px);
     display:none;
     flex-direction:column;
     z-index: 999;
 }
 
-.chat-header{ background:#00eaff; color:#000; padding:10px; font-weight:700; text-align:center; border-radius:15px 15px 0 0;}
-.chat-body{ padding:10px; height:200px; overflow-y:auto; font-size: 14px; }
-.chat-input{ display:flex; padding:10px; gap:5px; }
-.chat-input input{ flex:1; padding:8px; border-radius:5px; border:none; }
-.chat-input button{ background:#00eaff; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; font-weight:bold; }
+.chat-header{ background:#00eaff; color:#001423; padding:12px; font-weight:700; text-align:center; border-radius:18px 18px 0 0;}
+.chat-body{ padding:12px; height:240px; overflow-y:auto; font-size: 14px; }
+.chat-input{ display:flex; padding:10px; gap:8px; }
+.chat-input input{ flex:1; padding:8px; border:none; border-radius:6px; }
+.chat-input button{ padding:8px 14px; background:#00eaff; border:none; border-radius:6px; font-weight:600; cursor:pointer; }
 
+
+/* ================= MOBILE RESPONSIVENESS (<850px) ================= */
+@media(max-width:850px){
+    .section{
+        grid-template-columns:1fr; /* मोबाइल में एक के नीचे एक */
+        width: 95%; /* छोटी स्क्रीन पर ज्यादा जगह ले */
+        margin-top: 30px;
+    }
+
+    .box{
+        height: auto; /* मोबाइल में ऑटो हाइट */
+        min-height: 300px;
+        padding: 20px;
+    }
+
+    .hero h1{ font-size:40px; }
+    .hero h2{ font-size:30px; margin-top: -5px;}
+    .hero p{ font-size:16px; margin-top: 10px;}
+    .box h3{ font-size: 20px; margin-bottom: 15px;}
+    .box img{ width: 140px; height: 140px;}
+    .video-box iframe{ height: 180px; }
+
+    .chat-icon{
+        width:50px; height:50px;
+        font-size:24px;
+        bottom: 15px; right: 15px;
+    }
+    .chat-box{
+        width: 280px;
+        right: 15px; bottom: 75px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<!-- HERO PART (ANIMATIONS RESTORED) -->
+<!-- HERO PART (With Animations) -->
 <div class="hero">
     <h1>Welcome to</h1>
     <h2>Zenex IT Helpdesk</h2>
@@ -214,27 +240,28 @@ body::before{
     <a href="/admin/login">⚙ Admin</a>
 </div>
 
-<!-- 2 SMALL BOXES -->
+<!-- 2 BOXES (Responsive Size and Animation) -->
 <div class="section">
 
     <!-- QR BOX -->
     <div class="box">
         <h3>📱 Scan to Raise Ticket</h3>
         <img src="/qr/ticket" alt="QR Code">
-        <p style="opacity:.8; margin-top:12px; font-size:13px;">Scan to open ticket form</p>
+        <p style="opacity:.8; margin-top:20px; font-size:14px;">Scan to open ticket form</p>
     </div>
 
-    <!-- VIDEO BOX (YOUTUBE LINK INTEGRATED) -->
+    <!-- VIDEO BOX (YOUTUBE LINK INTEGRATED AND WORKING) -->
     <div class="box video-box">
-        <h3>🎥 Quick Help Guide</h3>
+        <h3>🎥 Did You Know</h3>
         <!-- यहाँ है आपका यूट्यूब वीडियो लिंक (Embed format में) -->
         <iframe 
-            src="www.youtube.com" 
+            src="https://www.youtube.com/embed/inWWhr5tnEA?list=PLEiEAq2VkUUJfPOj5nRounXvf3n17PCft&rel=0&autoplay=1&mute=1"
             title="YouTube video player" 
+            frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
             allowfullscreen>
         </iframe>
-        <p style="opacity:.8; margin-top:10px; font-size:13px;">Learn how to use the portal.</p>
+        <p style="opacity:.8; margin-top:15px; font-size:14px;">Learn how to raise & track tickets.</p>
     </div>
 
 </div>
