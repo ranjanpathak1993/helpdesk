@@ -1,137 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Raise Ticket | Zenex Helpdesk</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise Ticket | Zenex Helpdesk Premium Light Mode</title>
+    
+    <!-- Google Font Import Link Fixed -->
+    <link href="fonts.googleapis.com" rel="stylesheet">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg-main: #eef2f6; /* Very light background */
+            --container-bg: rgba(255, 255, 255, 0.6);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --accent: #007bff; /* Royal Blue Accent */
+        }
 
-<style>
-body{
-    font-family:Poppins, sans-serif;
-    background:#0b1220;
-    color:white;
-}
-.container{
-    max-width:700px;
-    margin:40px auto;
-    background:#121a2f;
-    padding:25px;
-    border-radius:16px;
-}
-h2{
-    text-align:center;
-    color:#00eaff;
-    margin-bottom:20px;
-}
-label{
-    display:block;
-    margin-top:14px;
-    margin-bottom:6px;
-    font-weight:600;
-}
-input,select,textarea{
-    width:100%;
-    padding:10px;
-    border-radius:8px;
-    border:none;
-}
-input[type="file"]{
-    background:#0b1220;
-    color:white;
-}
-small{
-    opacity:.7;
-}
-button{
-    margin-top:22px;
-    width:100%;
-    padding:12px;
-    background:#00eaff;
-    border:none;
-    border-radius:10px;
-    font-weight:700;
-    cursor:pointer;
-}
-.back{
-    text-align:center;
-    margin-top:15px;
-}
-.back a{
-    color:#00eaff;
-    text-decoration:none;
-    font-weight:600;
-}
-</style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            /* यह सुनिश्चित करता है कि सामग्री पेज के बीच में एलाइन हो */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            background: linear-gradient(135deg, #eef2f6 0%, #d8e1e9 100%);
+            background-attachment: fixed;
+            padding: 20px 0; /* Ensures space on small screens */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            padding: 50px;
+            border-radius: 40px; 
+            background: var(--container-bg);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5); 
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #000;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px; /* सभी फ़ील्ड के बीच समान जगह */
+        }
+
+        .full-width { grid-column: span 2; }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            color: #000;
+            font-size: 1rem;
+            transition: 0.3s;
+            box-sizing: border-box; /* सुनिश्चित करता है कि पैडिंग चौड़ाई में शामिल हो */
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 35px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.3);
+            transition: 0.4s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .back-link a:hover { color: #000; }
+
+        /* मोबाइल उपकरणों के लिए मीडिया क्वेरी */
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; } /* मोबाइल पर सिंगल कॉलम लेआउट */
+            .full-width { grid-column: span 1; }
+            .container { padding: 30px; border-radius: 28px; }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
-
     <h2>🎫 Raise a Support Ticket</h2>
 
     <form method="post" action="/ticket/submit" enctype="multipart/form-data">
-
-        <!-- EMPLOYEE CODE -->
-        <label>Employee Code</label>
-        <input type="text"
-               name="employeeCode"
-               placeholder="e.g. EMP1023"
-               required>
-
-        <label>Employee Name</label>
-        <input type="text" name="name" required>
-
-        <label>Official Email</label>
-        <input type="email" name="email" required>
-
-        <label>Issue Type</label>
-        <select name="issueType" required>
-            <option value="">-- Select Issue --</option>
-            <option>Email</option>
-            <option>Printer</option>
-            <option>Network</option>
-            <option>WiFi</option>
-            <option>VPN</option>
-            <option>Hardware</option>
-            <option>Software</option>
-            <option>SAP</option>
-            <option>Application Lock</option>
-            <option>Display</option>
-            <option>TAB</option>
-        </select>
-
-        <!-- ✅ PRIORITY (PROPERLY ADDED) -->
-        <label>Priority</label>
-        <select name="priority" required>
-            <option value="">-- Select Priority --</option>
-            <option value="LOW">LOW</option>
-            <option value="MEDIUM">MEDIUM</option>
-            <option value="HIGH">HIGH</option>
-        </select>
-
-        <label>Description</label>
-        <textarea name="description"
-                  rows="5"
-                  placeholder="Describe your issue clearly..."
-                  required></textarea>
-
-        <label>Upload Photo (optional)</label>
-        <input type="file" name="image" accept="image/png, image/jpeg">
-        <small>JPG / PNG • Max 5 MB</small>
-
-        <label>Upload Video (optional)</label>
-        <input type="file" name="video" accept="video/mp4">
-        <small>MP4 • Max 30 MB</small>
+        <div class="form-grid">
+            <div>
+                <label>Employee Code</label>
+                <input type="text" name="employeeCode" placeholder="EMP1023" required>
+            </div>
+            <div>
+                <label>Official Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="full-width">
+                <label>Employee Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div>
+                <label>Issue Type</label>
+                <select name="issueType" required>
+                    <option value="">-- Select --</option>
+                    <option>Network</option>
+                    <option>Software</option>
+                    <option>VPN</option>
+                    <option>Hardware</option>
+                </select>
+            </div>
+            <div>
+                <label>Priority</label>
+                <select name="priority" required>
+                    <option value="">-- Select --</option>
+                    <option value="LOW">LOW</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="HIGH">HIGH</option>
+                </select>
+            </div>
+            <div class="full-width">
+                <label>Description</label>
+                <textarea name="description" rows="4" placeholder="How can we help?" required></textarea>
+            </div>
+        </div>
 
         <button type="submit">Submit Ticket</button>
     </form>
 
-    <div class="back">
+    <div class="back-link">
         <a href="/">⬅ Back to Home</a>
     </div>
-
 </div>
 
 </body>
