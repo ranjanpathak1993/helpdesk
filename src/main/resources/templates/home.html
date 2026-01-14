@@ -2,23 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>RANJAN IT Helpdesk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
 /* =========================
-   LAYOUT VARIABLES
+   GLOBAL / THEME
 ========================= */
 :root{
-  /* Sidebar placement (aapke current menu ki width = 160px, left gap = 20px) */
+  /* Left menu placement you already use: left:20px; width:160px */
   --sidebar-left: 20px;
   --sidebar-w: 160px;
-  --sidebar-total: calc(var(--sidebar-left) + var(--sidebar-w));
+  --sidebar-total: calc(var(--sidebar-left) + var(--sidebar-w)); /* = 180px */
   --glow-cyan: #00eaff;
 }
 
-/* GLOBAL BACKGROUND */
+* { box-sizing: border-box; }
+
 body{
     margin:0;
     font-family:'Poppins',sans-serif;
@@ -40,7 +41,9 @@ body::before{
     100%{background-position:0 0}
 }
 
-/* HERO TEXT */
+/* =========================
+   HERO
+========================= */
 .hero{
     text-align:center;
     margin-top:40px;
@@ -62,19 +65,18 @@ body::before{
     opacity:0.85;
 }
 
-/* ==========================================
-   LEFT MENU (hero ke pass positioned)
-========================================== */
+/* =========================
+   LEFT MENU (same look, now toggle)
+========================= */
 .fixed-menu-left{
     position:absolute;
     left: var(--sidebar-left);
-    top:145%;                             /* Hero ke center ke level par */
+    top:145%;                     /* Hero ke center ke level par */
     transform:translateY(-40%);
     width: var(--sidebar-w);
     z-index: 1000;
 }
 
-/* MENU BUTTON (toggle) */
 .menu-btn{
     padding:15px;
     font-size:20px;
@@ -88,18 +90,14 @@ body::before{
     user-select:none;
 }
 
-/* MENU DROPDOWN (default hidden; toggle with .open) */
+/* default: HIDE; on .open -> show */
 .menu-dropdown{
     margin-top:12px;
-    display:none;                 /* << default hide */
+    display:none;                 /* HIDE */
     flex-direction:column;
-    max-height:0;
-    overflow:clip;
-    transition:max-height 220ms ease;
 }
 .menu-dropdown.open{
-    display:flex;
-    max-height:600px;             /* enough to reveal all links with transition */
+    display:flex;                 /* SHOW on toggle */
 }
 .menu-dropdown a{
     text-decoration:none;
@@ -117,9 +115,11 @@ body::before{
     color:#fff;
 }
 
-/* INFO BAR (ticker) — now starts after sidebar width */
+/* =========================
+   INFO TICKER (clipped before sidebar)
+========================= */
 .marquee-wrap{
-    margin-left: var(--sidebar-total);
+    margin-left: var(--sidebar-total);       /* 20 + 160 = 180px */
     width: calc(100% - var(--sidebar-total));
 }
 .marquee-box{
@@ -141,14 +141,15 @@ body::before{
     100%{transform:translateX(-100%);}
 }
 
-/* VIDEO SECTION */
+/* =========================
+   VIDEO SECTION
+========================= */
 .video-container{
     width:90%;
     max-width:900px;
     margin:0 auto;
     margin-top:50px;
 }
-
 .video-box{
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(0,255,255,0.15);
@@ -157,17 +158,18 @@ body::before{
     backdrop-filter:blur(12px);
     box-shadow:0 0 25px #00eaff44;
 }
-
 .video-box h3{
     font-size:25px;color:#00ffbf;margin-bottom:10px;
 }
 .video-box iframe{
     width:100%;
-    height:220px; /* Smaller frame */
+    height:220px;
     border:none;border-radius:14px;
 }
 
-/* CHAT ICON */
+/* =========================
+   CHAT ICON (opens your home-chat.html)
+========================= */
 .chat-icon{
     position:fixed;
     bottom:30px;right:25px;
@@ -180,69 +182,20 @@ body::before{
     z-index:2100;
 }
 
-/* CHAT WINDOW (hidden by default) */
-.chat-window{
-    position:fixed;
-    right:25px;
-    bottom:110px;                     /* icon ke upar khule */
-    width:320px;max-width:92vw;
-    height:430px;max-height:75vh;
-    background:rgba(5,15,30,0.9);
-    border:1px solid rgba(0,255,255,0.35);
-    border-radius:16px;
-    box-shadow:0 10px 35px rgba(0,234,255,0.35);
-    backdrop-filter: blur(10px);
-    display:none;                      /* << default hide */
-    flex-direction:column;
-    z-index:2200;
-    overflow:hidden;
-}
-.chat-window.open{ display:flex; animation:pop 160ms ease; }
-@keyframes pop{ from{ transform:scale(.98); opacity:.7 } to{ transform:scale(1); opacity:1 } }
-
-.chat-header{
-    padding:10px 12px;
-    background:rgba(0,255,255,0.12);
-    display:flex; align-items:center; justify-content:space-between;
-    color:#9af7ff; font-weight:700;
-}
-.chat-close{
-    background:transparent;border:none;color:#9af7ff;
-    font-size:20px; cursor:pointer; line-height:1;
-}
-.chat-body{
-    flex:1; overflow:auto; padding:12px;
-    display:flex; flex-direction:column; gap:8px;
-}
-.msg{
-    max-width:80%;
-    padding:8px 10px; border-radius:10px; font-size:14px;
-}
-.msg.user{ align-self:flex-end; background:#00eaff; color:#002233; }
-.msg.bot{  align-self:flex-start; background:rgba(255,255,255,0.08); border:1px solid rgba(0,255,255,0.15); color:#cfefff; }
-
-.chat-input{
-    display:flex; gap:6px; padding:10px; background:rgba(255,255,255,0.04);
-}
-.chat-input input{
-    flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(0,255,255,0.25);
-    background:rgba(255,255,255,0.06); color:#eaffff; outline:none;
-}
-.chat-input button{
-    padding:10px 14px; border-radius:10px; border:none; cursor:pointer;
-    background:var(--glow-cyan); color:#002233; font-weight:700;
-    box-shadow:0 0 12px rgba(0,234,255,0.45);
-}
-
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 .health-bar{
     position:fixed;bottom:0;width:100%;
     background:rgba(0,255,191,0.12);
     text-align:center;padding:5px 0;color:#00ffbf;
 }
 
-/* RESPONSIVE: small screens par sidebar offset hata do */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 992px){
+  /* On small screens you may not need the offset */
   :root{ --sidebar-left:0px; --sidebar-w:0px; --sidebar-total:0px; }
   .fixed-menu-left{ left: 12px; width: 180px; }
   .hero .title{ font-size:42px; }
@@ -256,28 +209,28 @@ body::before{
 <!-- HERO -->
 <div class="hero">
 
-    <!-- LEFT MENU (toggle) -->
-    <div class="fixed-menu-left">
-        <div class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuDropdown">☰ MENU</div>
+  <!-- LEFT MENU (toggle) -->
+  <div class="fixed-menu-left">
+      <div class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuDropdown">☰ MENU</div>
 
-        <div class="menu-dropdown" id="menuDropdown">
-            /ticket/new🎫 Raise Ticket</a>
-            /track🔍 Track Ticket</a>
-            /ai-help🤖 AI Help</a>
-            /knowledge-base📄 Articles</a>
-            /contact☎ Contact Us</a>
-            /qr/ticket📱 Scan QR</a>
-            /videos🎥 Video</a>
-            /admin/login⚙ Admin</a>
-        </div>
-    </div>
+      <div class="menu-dropdown" id="menuDropdown">
+          /ticket/new🎫 Raise Ticket</a>
+          /track🔍 Track Ticket</a>
+          /ai-help🤖 AI Help</a>
+          /knowledge-base📄 Articles</a>
+          /contact☎ Contact Us</a>
+          /qr/ticket📱 Scan QR</a>
+          /videos🎥 Video</a>
+          /admin/login⚙ Admin</a>
+      </div>
+  </div>
 
-    <div class="title">Welcome To RANJAN</div>
-    <div class="subtitle">IT Helpdesk</div>
-    <div class="tagline">Your one-stop solution for IT support &amp; ticketing</div>
+  <div class="title">Welcome To RANJAN</div>
+  <div class="subtitle">IT Helpdesk</div>
+  <div class="tagline">Your one-stop solution for IT support &amp; ticketing</div>
 </div>
 
-<!-- INFO BAR (shifted to avoid sidebar) -->
+<!-- INFO BAR (ticker shifted to avoid left menu overlap) -->
 <div class="marquee-wrap">
   <div class="marquee-box">
       <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
@@ -286,111 +239,48 @@ body::before{
 
 <!-- VIDEO SECTION -->
 <div class="video-container">
-    <div class="video-box">
-        <h3>🎥 What is Cyber Security?</h3>
-        https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1</iframe>
-    </div>
-</div>
-
-<!-- CHAT ICON -->
-<div class="chat-icon" id="chatIcon" role="button" aria-label="Open chat" tabindex="0">💬</div>
-
-<!-- CHAT WINDOW -->
-<div class="chat-window" id="chatWindow" aria-hidden="true">
-  <div class="chat-header">
-    Assistant
-    <button class="chat-close" id="chatClose" aria-label="Close chat">×</button>
-  </div>
-  <div class="chat-body" id="chatBody">
-    <div class="msg bot">Hi! How can I help you today?</div>
-  </div>
-  <div class="chat-input">
-    <input id="chatInput" type="text" placeholder="Type your message and press Enter..." />
-    <button id="chatSend">Send</button>
+  <div class="video-box">
+      <h3>🎥 What is Cyber Security?</h3>
+      https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1</iframe>
   </div>
 </div>
+
+<!-- CHAT ICON -> open your home-chat.html (same tab) -->
+/home-chat.html💬</div>
+<!-- If you prefer new tab instead, replace above with:
+<div class="chat-icon" onclick="window.open('/home-chat.html','_blank')" title="Chat">💬</div>
+-->
 
 <div class="health-bar">© 2026 Ranjan Pathak</div>
 
-<!-- ====== SCRIPTS: menu toggle + chat toggle ====== -->
+<!-- =========================
+     SCRIPTS: menu toggle only
+========================= -->
 <script>
-(function(){
-  // ==== MENU TOGGLE ====
-  const menuBtn = document.getElementById('menuBtn');
-  const menuDropdown = document.getElementById('menuDropdown');
+  (function(){
+    const menuBtn = document.getElementById('menuBtn');
+    const menuDropdown = document.getElementById('menuDropdown');
 
-  function setMenu(open){
-    if(open){
-      menuDropdown.classList.add('open');
-      menuBtn.setAttribute('aria-expanded','true');
-    } else {
-      menuDropdown.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded','false');
-    }
-  }
+    // default: hide
+    menuDropdown.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
 
-  // Default: hide
-  setMenu(false);
+    menuBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const isOpen = menuDropdown.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
 
-  menuBtn.addEventListener('click', (e)=>{
-    e.stopPropagation();
-    const open = !menuDropdown.classList.contains('open');
-    setMenu(open);
-  });
-
-  // Outside click closes the menu
-  document.addEventListener('click', (e)=>{
-    if(menuDropdown.classList.contains('open')){
-      if(!menuDropdown.contains(e.target) && e.target !== menuBtn){
-        setMenu(false);
+    // Outside click closes menu
+    document.addEventListener('click', (e)=>{
+      if(menuDropdown.classList.contains('open')){
+        if(!menuDropdown.contains(e.target) && e.target !== menuBtn){
+          menuDropdown.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded','false');
+        }
       }
-    }
-  });
-
-  // ==== CHAT TOGGLE ====
-  const chatIcon   = document.getElementById('chatIcon');
-  const chatWindow = document.getElementById('chatWindow');
-  const chatClose  = document.getElementById('chatClose');
-  const chatBody   = document.getElementById('chatBody');
-  const chatInput  = document.getElementById('chatInput');
-  const chatSend   = document.getElementById('chatSend');
-
-  function openChat(){
-    chatWindow.classList.add('open');
-    chatWindow.setAttribute('aria-hidden','false');
-    setTimeout(()=> chatInput.focus(), 50);
-  }
-  function closeChat(){
-    chatWindow.classList.remove('open');
-    chatWindow.setAttribute('aria-hidden','true');
-  }
-
-  chatIcon.addEventListener('click', openChat);
-  chatIcon.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); openChat(); }});
-  chatClose.addEventListener('click', closeChat);
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeChat(); });
-
-  // Simple local echo (placeholder)
-  function sendMsg(){
-    const txt = chatInput.value.trim();
-    if(!txt) return;
-    const user = document.createElement('div');
-    user.className='msg user';
-    user.textContent = txt;
-    chatBody.appendChild(user);
-
-    // Fake bot reply
-    const bot = document.createElement('div');
-    bot.className='msg bot';
-    bot.textContent = 'Thanks! We received: ' + txt;
-    setTimeout(()=> { chatBody.appendChild(bot); chatBody.scrollTop = chatBody.scrollHeight; }, 300);
-
-    chatInput.value='';
-    chatBody.scrollTop = chatBody.scrollHeight;
-  }
-  chatSend.addEventListener('click', sendMsg);
-  chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); sendMsg(); }});
-})();
+    });
+  })();
 </script>
 
 </body>
