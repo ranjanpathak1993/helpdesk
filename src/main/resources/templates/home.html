@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* GLOBAL */
+
+/* GLOBAL BACKGROUND */
 body{
     margin:0;
     font-family:'Poppins',sans-serif;
@@ -28,10 +29,12 @@ body::before{
     100%{background-position:0 0}
 }
 
-/* HERO */
+/* HERO TEXT */
 .hero{
     text-align:center;
     margin-top:40px;
+    margin-bottom:40px;
+    position:relative;
 }
 .hero .title{
     font-size:55px;font-weight:800;margin:0;
@@ -39,21 +42,66 @@ body::before{
     -webkit-background-clip:text;color:transparent;
 }
 .hero .subtitle{
-    font-size:40px;font-weight:700;margin-top:8px;
-    color:#00ffd0;text-shadow:0 0 15px #00ffc650;
+    font-size:40px;margin-top:5px;
+    color:#00ffd0;
 }
 .hero .tagline{
     margin-top:10px;
     font-size:18px;
-    opacity:0.8;
+    opacity:0.85;
 }
 
-/* INFO MARQUEE */
+/* ==========================================
+   MENU EXACT "WELCOME" HEIGHT PAR LEFT ME
+========================================== */
+.fixed-menu-left{
+    position:absolute;
+    left:20px;
+    top:50%;                  /* Hero ke center ke level par */
+    transform:translateY(-50%);
+    width:180px;
+}
+
+/* MENU BUTTON */
+.menu-btn{
+    padding:15px;
+    font-size:20px;
+    font-weight:600;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(0,255,255,0.3);
+    border-radius:12px;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+    text-align:center;
+}
+
+/* MENU DROPDOWN */
+.menu-dropdown{
+    margin-top:12px;
+    display:flex;
+    flex-direction:column;
+}
+.menu-dropdown a{
+    text-decoration:none;
+    padding:12px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.25);
+    color:#00eaff;
+    margin-bottom:10px;
+    border-radius:10px;
+    backdrop-filter:blur(12px);
+    display:flex;align-items:center;gap:8px;
+}
+.menu-dropdown a:hover{
+    background:rgba(0,255,255,0.3);
+    color:#fff;
+}
+
+/* INFO BAR */
 .marquee-box{
     width:100%;
-    background:rgba(0,255,255,0.1);
+    background:rgba(0,255,255,0.13);
     padding:8px 0;
-    margin-top:18px;
     overflow:hidden;
     box-shadow:0 0 10px #00eaff55;
 }
@@ -69,72 +117,29 @@ body::before{
     100%{transform:translateX(-100%);}
 }
 
-/* MENU WRAPPER */
-.main-wrapper{
+/* VIDEO SECTION */
+.video-container{
     width:90%;
-    max-width:1000px;
+    max-width:900px;
     margin:0 auto;
-    margin-top:30px;
-    display:flex;
-    gap:30px;
+    margin-top:50px;
 }
 
-/* MENU LEFT */
-.menu-box{
-    width:170px;
-}
-
-.menu-btn{
-    padding:15px;
-    font-size:20px;
-    font-weight:600;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(0,255,255,0.3);
-    border-radius:12px;
-    cursor:pointer;
-    backdrop-filter:blur(10px);
-    transition:.3s;
-}
-.menu-btn:hover{background:rgba(0,255,255,0.25);}
-
-.menu-dropdown{
-    margin-top:12px;
-    display:none;
-    flex-direction:column;
-}
-.menu-dropdown a{
-    text-decoration:none;
-    color:#00eaff;
-    padding:12px;
-    background:rgba(255,255,255,0.08);
-    margin-bottom:10px;
-    border:1px solid rgba(0,255,255,0.25);
-    border-radius:10px;
-    backdrop-filter:blur(12px);
-    transition:.2s;
-}
-.menu-dropdown a:hover{
-    background:rgba(0,255,255,0.3);
-    color:#fff;
-}
-
-/* VIDEO BOX (SMALLER) */
 .video-box{
-    flex:1;
-    height:300px; /* smaller now */
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(0,255,255,0.15);
     border-radius:20px;
-    padding:20px;
+    padding:22px;
     backdrop-filter:blur(12px);
     box-shadow:0 0 25px #00eaff44;
 }
+
 .video-box h3{
-    font-size:24px;color:#00ffbf;margin-bottom:10px;
+    font-size:25px;color:#00ffbf;margin-bottom:10px;
 }
 .video-box iframe{
     width:100%;
-    height:210px; /* reduced */
+    height:220px; /* Smaller frame */
     border:none;border-radius:14px;
 }
 
@@ -142,7 +147,8 @@ body::before{
 .chat-icon{
     position:fixed;
     bottom:30px;right:25px;
-    width:65px;height:65px;border-radius:50%;
+    width:65px;height:65px;
+    border-radius:50%;
     background:#00eaff;color:#002233;
     display:flex;align-items:center;justify-content:center;
     font-size:32px;cursor:pointer;
@@ -156,33 +162,19 @@ body::before{
     background:rgba(0,255,191,0.12);
     text-align:center;padding:5px 0;color:#00ffbf;
 }
+
 </style>
 </head>
-
 <body>
 
 <!-- HERO -->
 <div class="hero">
-    <div class="title">Welcome To RANJAN</div>
-    <div class="subtitle">IT Helpdesk</div>
-    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
-</div>
 
-<!-- INFO BAR -->
-<div class="marquee-box">
-    <div class="marquee-text">
-        ⚠ Scheduled Maintenance 10 PM – 12 AM | Cyber Security Awareness Week | Contact IT for any urgent help ⚠
-    </div>
-</div>
+    <!-- LEFT MENU FIXED AT HERO HEIGHT -->
+    <div class="fixed-menu-left">
+        <div class="menu-btn">☰ MENU</div>
 
-<!-- MENU + VIDEO -->
-<div class="main-wrapper">
-
-    <!-- LEFT MENU -->
-    <div class="menu-box">
-        <div class="menu-btn" onclick="toggleMenu()">☰ MENU</div>
-
-        <div class="menu-dropdown" id="menuDrop">
+        <div class="menu-dropdown">
             <a href="/ticket/new">🎫 Raise Ticket</a>
             <a href="/track">🔍 Track Ticket</a>
             <a href="/ai-help">🤖 AI Help</a>
@@ -190,29 +182,32 @@ body::before{
             <a href="/contact">☎ Contact Us</a>
             <a href="/admin/login">⚙ Admin</a>
             <a href="/qr/ticket">📱 Scan QR</a>
-            <a href="/Tab-videos">🎥 Tab-Video</a>   <!-- NEW TAB -->
+            <a href="/videos">🎥 Video</a>
         </div>
     </div>
 
-    <!-- RIGHT VIDEO BOX -->
+    <div class="title">Welcome To RANJAN</div>
+    <div class="subtitle">IT Helpdesk</div>
+    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
+</div>
+
+<!-- INFO BAR -->
+<div class="marquee-box">
+    <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
+</div>
+
+<!-- VIDEO SECTION -->
+<div class="video-container">
     <div class="video-box">
         <h3>🎥 What is Cyber Security?</h3>
         <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
     </div>
-
 </div>
 
 <!-- CHAT ICON -->
 <div class="chat-icon">💬</div>
 
 <div class="health-bar">© 2026 Ranjan Pathak</div>
-
-<script>
-function toggleMenu(){
-    let m = document.getElementById("menuDrop");
-    m.style.display = (m.style.display==="flex") ? "none" : "flex";
-}
-</script>
 
 </body>
 </html>
