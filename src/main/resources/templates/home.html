@@ -1,25 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>RANJAN IT Helpdesk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* =========================
-   GLOBAL / THEME
-========================= */
-:root{
-  /* Left menu placement you already use: left:20px; width:160px */
-  --sidebar-left: 20px;
-  --sidebar-w: 160px;
-  --sidebar-total: calc(var(--sidebar-left) + var(--sidebar-w)); /* = 180px */
-  --glow-cyan: #00eaff;
-}
 
-* { box-sizing: border-box; }
-
+/* GLOBAL BACKGROUND */
 body{
     margin:0;
     font-family:'Poppins',sans-serif;
@@ -41,9 +29,7 @@ body::before{
     100%{background-position:0 0}
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO TEXT */
 .hero{
     text-align:center;
     margin-top:40px;
@@ -65,18 +51,18 @@ body::before{
     opacity:0.85;
 }
 
-/* =========================
-   LEFT MENU (same look, now toggle)
-========================= */
+/* ==========================================
+   MENU EXACT "WELCOME" HEIGHT PAR LEFT ME
+========================================== */
 .fixed-menu-left{
     position:absolute;
-    left: var(--sidebar-left);
-    top:145%;                     /* Hero ke center ke level par */
+    left:20px;
+    top:145%;                             /* Hero ke center ke level par */
     transform:translateY(-40%);
-    width: var(--sidebar-w);
-    z-index: 1000;
+    width:160px;
 }
 
+/* MENU BUTTON */
 .menu-btn{
     padding:15px;
     font-size:20px;
@@ -87,17 +73,13 @@ body::before{
     cursor:pointer;
     backdrop-filter:blur(10px);
     text-align:center;
-    user-select:none;
 }
 
-/* default: HIDE; on .open -> show */
+/* MENU DROPDOWN */
 .menu-dropdown{
     margin-top:12px;
-    display:none;                 /* HIDE */
+    display:flex;
     flex-direction:column;
-}
-.menu-dropdown.open{
-    display:flex;                 /* SHOW on toggle */
 }
 .menu-dropdown a{
     text-decoration:none;
@@ -115,13 +97,7 @@ body::before{
     color:#fff;
 }
 
-/* =========================
-   INFO TICKER (clipped before sidebar)
-========================= */
-.marquee-wrap{
-    margin-left: var(--sidebar-total);       /* 20 + 160 = 180px */
-    width: calc(100% - var(--sidebar-total));
-}
+/* INFO BAR */
 .marquee-box{
     width:100%;
     background:rgba(0,255,255,0.13);
@@ -141,15 +117,14 @@ body::before{
     100%{transform:translateX(-100%);}
 }
 
-/* =========================
-   VIDEO SECTION
-========================= */
+/* VIDEO SECTION */
 .video-container{
     width:90%;
     max-width:900px;
     margin:0 auto;
     margin-top:50px;
 }
+
 .video-box{
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(0,255,255,0.15);
@@ -158,50 +133,36 @@ body::before{
     backdrop-filter:blur(12px);
     box-shadow:0 0 25px #00eaff44;
 }
+
 .video-box h3{
     font-size:25px;color:#00ffbf;margin-bottom:10px;
 }
 .video-box iframe{
     width:100%;
-    height:220px;
+    height:220px; /* Smaller frame */
     border:none;border-radius:14px;
 }
 
-/* =========================
-   CHAT ICON (opens your home-chat.html)
-========================= */
+/* CHAT ICON */
 .chat-icon{
     position:fixed;
     bottom:30px;right:25px;
     width:65px;height:65px;
     border-radius:50%;
-    background:var(--glow-cyan);color:#002233;
+    background:#00eaff;color:#002233;
     display:flex;align-items:center;justify-content:center;
     font-size:32px;cursor:pointer;
-    box-shadow:0 0 25px var(--glow-cyan);
+    box-shadow:0 0 25px #00eaff;
     z-index:2100;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 .health-bar{
     position:fixed;bottom:0;width:100%;
     background:rgba(0,255,191,0.12);
     text-align:center;padding:5px 0;color:#00ffbf;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 992px){
-  /* On small screens you may not need the offset */
-  :root{ --sidebar-left:0px; --sidebar-w:0px; --sidebar-total:0px; }
-  .fixed-menu-left{ left: 12px; width: 180px; }
-  .hero .title{ font-size:42px; }
-  .hero .subtitle{ font-size:28px; }
-  .video-box iframe{ height:200px; }
-}
 </style>
 </head>
 <body>
@@ -209,79 +170,44 @@ body::before{
 <!-- HERO -->
 <div class="hero">
 
-  <!-- LEFT MENU (toggle) -->
-  <div class="fixed-menu-left">
-      <div class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuDropdown">☰ MENU</div>
+    <!-- LEFT MENU FIXED AT HERO HEIGHT -->
+    <div class="fixed-menu-left">
+        <div class="menu-btn">☰ MENU</div>
 
-      <div class="menu-dropdown" id="menuDropdown">
-          /ticket/new🎫 Raise Ticket</a>
-          /track🔍 Track Ticket</a>
-          /ai-help🤖 AI Help</a>
-          /knowledge-base📄 Articles</a>
-          /contact☎ Contact Us</a>
-          /qr/ticket📱 Scan QR</a>
-          /videos🎥 Video</a>
-          /admin/login⚙ Admin</a>
-      </div>
-  </div>
+        <div class="menu-dropdown">
+            <a href="/ticket/new">🎫 Raise Ticket</a>
+            <a href="/track">🔍 Track Ticket</a>
+            <a href="/ai-help">🤖 AI Help</a>
+            <a href="/knowledge-base">📄 Articles</a>
+            <a href="/contact">☎ Contact Us</a>
+            <a href="/qr/ticket">📱 Scan QR</a>
+            <a href="/videos">🎥 Video</a>
+            <a href="/admin/login">⚙ Admin</a>
+        </div>
+    </div>
 
-  <div class="title">Welcome To RANJAN</div>
-  <div class="subtitle">IT Helpdesk</div>
-  <div class="tagline">Your one-stop solution for IT support &amp; ticketing</div>
+    <div class="title">Welcome To RANJAN</div>
+    <div class="subtitle">IT Helpdesk</div>
+    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
 </div>
 
-<!-- INFO BAR (ticker shifted to avoid left menu overlap) -->
-<div class="marquee-wrap">
-  <div class="marquee-box">
-      <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
-  </div>
+<!-- INFO BAR -->
+<div class="marquee-box">
+    <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
 </div>
 
 <!-- VIDEO SECTION -->
 <div class="video-container">
-  <div class="video-box">
-      <h3>🎥 What is Cyber Security?</h3>
-      https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1</iframe>
-  </div>
+    <div class="video-box">
+        <h3>🎥 What is Cyber Security?</h3>
+        <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
+    </div>
 </div>
 
-<!-- CHAT ICON -> open your home-chat.html (same tab) -->
-/home-chat.html💬</div>
-<!-- If you prefer new tab instead, replace above with:
-<div class="chat-icon" onclick="window.open('/home-chat.html','_blank')" title="Chat">💬</div>
--->
+<!-- CHAT ICON -->
+<div class="chat-icon">💬</div>
 
 <div class="health-bar">© 2026 Ranjan Pathak</div>
-
-<!-- =========================
-     SCRIPTS: menu toggle only
-========================= -->
-<script>
-  (function(){
-    const menuBtn = document.getElementById('menuBtn');
-    const menuDropdown = document.getElementById('menuDropdown');
-
-    // default: hide
-    menuDropdown.classList.remove('open');
-    menuBtn.setAttribute('aria-expanded','false');
-
-    menuBtn.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      const isOpen = menuDropdown.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    // Outside click closes menu
-    document.addEventListener('click', (e)=>{
-      if(menuDropdown.classList.contains('open')){
-        if(!menuDropdown.contains(e.target) && e.target !== menuBtn){
-          menuDropdown.classList.remove('open');
-          menuBtn.setAttribute('aria-expanded','false');
-        }
-      }
-    });
-  })();
-</script>
 
 </body>
 </html>
