@@ -13,23 +13,9 @@ body{
     font-family:'Poppins',sans-serif;
     background:#050b18;
     color:white;
-    overflow-x:hidden;
-}
-body::before{
-    content:"";
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    background:linear-gradient(130deg,#001829,#04101f,#081f39,#000);
-    background-size:400% 400%;
-    animation:bgMove 18s infinite linear;
-    z-index:-1;
-}
-@keyframes bgMove{
-    0%{background-position:0 0}
-    50%{background-position:100% 100%}
-    100%{background-position:0 0}
 }
 
-/* HERO CENTER */
+/* HERO */
 .hero{
     text-align:center;
     margin-top:40px;
@@ -53,47 +39,69 @@ body::before{
     opacity:0.85;
 }
 
-/* LEFT SIDE MENU (FINAL EXACT POSITION) */
+/* LEFT MENU FIXED POSITION */
 .left-menu{
     position:absolute;
-    top:140px;       /* EXACT HEIGHT that matches your screenshot */
-    left:20px;       /* left align */
-    width:170px;
-    z-index:1000;
+    top:260px;      /* EXACT AI HELP HEIGHT */
+    left:20px;
+    width:200px;
 }
 
-.left-menu a{
-    display:block;
-    text-decoration:none;
+/* MENU BUTTON */
+.menu-title{
     padding:12px 15px;
-    margin-bottom:10px;
-    background:rgba(255,255,255,0.08);
+    font-size:20px;
+    font-weight:600;
+    color:#00eaff;
+    background:rgba(255,255,255,0.12);
     border:1px solid rgba(0,255,255,0.25);
     border-radius:12px;
     backdrop-filter:blur(12px);
-    color:#00eaff;
-    font-size:16px;
-    transition:.2s;
+    text-align:center;
+    cursor:pointer;
 }
-.left-menu a:hover{
-    background:rgba(0,255,255,0.3);
+
+/* DROPDOWN HIDDEN BY DEFAULT */
+.menu-items{
+    display:none;
+    margin-top:12px;
+}
+
+/* MENU LINKS */
+.menu-items a{
+    display:block;
+    text-decoration:none;
+    padding:12px 15px;
+    margin-bottom:12px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.25);
+    border-radius:12px;
+    color:#00eaff;
+    backdrop-filter:blur(12px);
+}
+.menu-items a:hover{
+    background:rgba(0,255,255,0.35);
     color:white;
 }
 
-/* MARQUEE BELOW HERO */
-.marquee-box{
+/* MARQUEE RIGHT SIDE ONLY */
+.marquee-wrapper{
     width:100%;
-    background:rgba(0,255,255,0.15);
-    padding:5px 0;
-    margin-top:20px;
+    margin-top:25px;
+}
+.marquee-box{
+    width:calc(100% - 220px);
+    margin-left:220px;
+    background:rgba(0,255,255,0.12);
+    padding:6px 0;
     overflow:hidden;
-    box-shadow:0 0 10px #00eaff55;
+    border-radius:8px;
 }
 .marquee-text{
-    white-space:nowrap;
     display:inline-block;
+    white-space:nowrap;
     padding-left:100%;
-    animation:marquee 22s linear infinite;
+    animation:marquee 20s linear infinite;
     color:#00eaff;
     font-weight:600;
 }
@@ -102,73 +110,59 @@ body::before{
     100%{transform:translateX(-100%);}
 }
 
-/* VIDEO BOX */
+/* VIDEO */
 .video-container{
     width:80%;
     max-width:900px;
-    margin:0 auto;
-    margin-top:40px;
+    margin:60px auto;
 }
-
 .video-box{
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(0,255,255,0.15);
-    border-radius:20px;
     padding:20px;
-    backdrop-filter:blur(12px);
-    box-shadow:0 0 25px #00eaff44;
-}
-.video-box h3{
-    font-size:24px;
-    color:#00ffbf;
-    margin-bottom:10px;
+    border-radius:18px;
 }
 .video-box iframe{
     width:100%;
-    height:220px;   /* SMALL video */
+    height:220px;
     border:none;
-    border-radius:16px;
+    border-radius:12px;
 }
 
-/* CHAT ICON */
-.chat-icon{
-    position:fixed;
-    bottom:30px;right:25px;
-    width:65px;height:65px;
-    border-radius:50%;
-    background:#00eaff;color:#002233;
-    display:flex;align-items:center;justify-content:center;
-    font-size:32px;cursor:pointer;
-    box-shadow:0 0 25px #00eaff;
-    z-index:2000;
-}
-
-/* FOOTER */
 .health-bar{
-    position:fixed;bottom:0;width:100%;
-    background:rgba(0,255,191,0.12);
     text-align:center;
     padding:5px 0;
-    color:#00ffbf;
+    background:rgba(0,255,191,0.12);
+    position:fixed;
+    width:100%;
+    bottom:0;
 }
 
 </style>
 </head>
 <body>
 
-<!-- LEFT SIDE MENU (FINAL) -->
+<!-- LEFT MENU -->
 <div class="left-menu">
-    <a href="/ticket/new">🎫 Raise Ticket</a>
-    <a href="/track">🔍 Track Ticket</a>
-    <a href="/ai-help">🤖 AI Help</a>
-    <a href="/knowledge-base">📄 Articles</a>
-    <a href="/contact">☎ Contact Us</a>
-    <a href="/admin/login">⚙ Admin</a>
-    <a href="/qr/ticket">📱 Scan QR</a>
-    <a href="/videos">🎥 Video</a>
+    
+    <div class="menu-title" onclick="toggleMenu()">
+        ☰ MENU
+    </div>
+
+    <div class="menu-items" id="menuItems">
+        <a href="/ticket/new">🎫 Raise Ticket</a>
+        <a href="/track">🔍 Track Ticket</a>
+        <a href="/ai-help">🤖 AI Help</a>
+        <a href="/knowledge-base">📄 Articles</a>
+        <a href="/contact">☎ Contact Us</a>
+        <a href="/admin/login">⚙ Admin</a>
+        <a href="/qr/ticket">📱 Scan QR</a>
+        <a href="/videos">🎥 Video</a>
+    </div>
+
 </div>
 
-<!-- HERO CENTER -->
+<!-- HERO -->
 <div class="hero">
     <div class="title">Welcome To RANJAN</div>
     <div class="subtitle">IT Helpdesk</div>
@@ -176,11 +170,13 @@ body::before{
 </div>
 
 <!-- MARQUEE -->
-<div class="marquee-box">
-    <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
+<div class="marquee-wrapper">
+    <div class="marquee-box">
+        <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
+    </div>
 </div>
 
-<!-- VIDEO SECTION -->
+<!-- VIDEO BOX -->
 <div class="video-container">
     <div class="video-box">
         <h3>🎥 What is Cyber Security?</h3>
@@ -188,10 +184,14 @@ body::before{
     </div>
 </div>
 
-<!-- CHAT ICON -->
-<div class="chat-icon">💬</div>
-
 <div class="health-bar">© 2026 Ranjan Pathak</div>
+
+<script>
+function toggleMenu(){
+    const box = document.getElementById("menuItems");
+    box.style.display = (box.style.display === "block") ? "none" : "block";
+}
+</script>
 
 </body>
 </html>
