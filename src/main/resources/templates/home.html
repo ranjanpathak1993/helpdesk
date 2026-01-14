@@ -16,8 +16,7 @@ body{
 }
 body::before{
     content:"";
-    position:fixed;
-    top:0;left:0;width:100%;height:100%;
+    position:fixed;top:0;left:0;width:100%;height:100%;
     background:linear-gradient(130deg,#001829,#04101f,#081f39,#000);
     background-size:400% 400%;
     animation:bgMove 18s infinite linear;
@@ -29,10 +28,10 @@ body::before{
     100%{background-position:0 0}
 }
 
-/* HERO TEXT */
+/* HERO */
 .hero{
     text-align:center;
-    margin-top:45px;margin-bottom:10px;
+    margin-top:40px;
 }
 .hero .title{
     font-size:55px;font-weight:800;margin:0;
@@ -40,23 +39,52 @@ body::before{
     -webkit-background-clip:text;color:transparent;
 }
 .hero .subtitle{
-    font-size:40px;font-weight:700;
-    color:#1eeccc;margin-top:5px;
-    text-shadow:0 0 10px #00ffc650;
+    font-size:40px;font-weight:700;margin-top:8px;
+    color:#00ffd0;text-shadow:0 0 15px #00ffc650;
+}
+.hero .tagline{
+    margin-top:10px;
+    font-size:18px;
+    opacity:0.8;
 }
 
-/* ==========================
-   NEW CLEAN SIMPLE DROPDOWN MENU
-========================== */
-.menu-wrapper{
-    width:90%;max-width:1000px;
-    margin:0 auto;margin-top:25px;
-    display:flex;gap:25px;
+/* INFO MARQUEE */
+.marquee-box{
+    width:100%;
+    background:rgba(0,255,255,0.1);
+    padding:8px 0;
+    margin-top:18px;
+    overflow:hidden;
+    box-shadow:0 0 10px #00eaff55;
+}
+.marquee-text{
+    white-space:nowrap;
+    display:inline-block;
+    padding-left:100%;
+    animation:marquee 25s linear infinite;
+    color:#00eaff;font-weight:600;
+}
+@keyframes marquee{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-100%);}
 }
 
-/* MENU BUTTON */
+/* MENU WRAPPER */
+.main-wrapper{
+    width:90%;
+    max-width:1000px;
+    margin:0 auto;
+    margin-top:30px;
+    display:flex;
+    gap:30px;
+}
+
+/* MENU LEFT */
+.menu-box{
+    width:170px;
+}
+
 .menu-btn{
-    width:150px;
     padding:15px;
     font-size:20px;
     font-weight:600;
@@ -65,64 +93,56 @@ body::before{
     border-radius:12px;
     cursor:pointer;
     backdrop-filter:blur(10px);
-    transition:.2s;
+    transition:.3s;
 }
-.menu-btn:hover{
-    background:rgba(0,255,255,0.25);
-}
+.menu-btn:hover{background:rgba(0,255,255,0.25);}
 
-/* DROPDOWN BOX */
 .menu-dropdown{
-    margin-top:10px;
+    margin-top:12px;
     display:none;
     flex-direction:column;
-    width:170px;
 }
-
 .menu-dropdown a{
     text-decoration:none;
-    padding:12px 15px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(0,255,255,0.25);
     color:#00eaff;
-    margin-bottom:8px;
+    padding:12px;
+    background:rgba(255,255,255,0.08);
+    margin-bottom:10px;
+    border:1px solid rgba(0,255,255,0.25);
     border-radius:10px;
     backdrop-filter:blur(12px);
     transition:.2s;
 }
 .menu-dropdown a:hover{
     background:rgba(0,255,255,0.3);
-    color:white;
+    color:#fff;
 }
 
-/* VIDEO BOX */
+/* VIDEO BOX (SMALLER) */
 .video-box{
     flex:1;
-    height:350px;  /* SMALLER NOW */
-    border-radius:22px;
+    height:300px; /* smaller now */
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(0,255,255,0.15);
-    backdrop-filter:blur(14px);
+    border-radius:20px;
     padding:20px;
+    backdrop-filter:blur(12px);
     box-shadow:0 0 25px #00eaff44;
 }
-
 .video-box h3{
-    font-size:26px;color:#00ffbf;margin-bottom:10px;
+    font-size:24px;color:#00ffbf;margin-bottom:10px;
 }
-
 .video-box iframe{
     width:100%;
-    height:250px; /* Smaller frame */
-    border:none;border-radius:16px;
+    height:210px; /* reduced */
+    border:none;border-radius:14px;
 }
 
-/* CHAT BUTTON */
+/* CHAT ICON */
 .chat-icon{
     position:fixed;
     bottom:30px;right:25px;
-    width:65px;height:65px;
-    border-radius:50%;
+    width:65px;height:65px;border-radius:50%;
     background:#00eaff;color:#002233;
     display:flex;align-items:center;justify-content:center;
     font-size:32px;cursor:pointer;
@@ -130,7 +150,7 @@ body::before{
     z-index:2100;
 }
 
-/* BOTTOM COPYRIGHT */
+/* FOOTER */
 .health-bar{
     position:fixed;bottom:0;width:100%;
     background:rgba(0,255,191,0.12);
@@ -145,13 +165,21 @@ body::before{
 <div class="hero">
     <div class="title">Welcome To RANJAN</div>
     <div class="subtitle">IT Helpdesk</div>
+    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
 </div>
 
-<!-- MENU + VIDEO SECTION -->
-<div class="menu-wrapper">
+<!-- INFO BAR -->
+<div class="marquee-box">
+    <div class="marquee-text">
+        ⚠ Scheduled Maintenance 10 PM – 12 AM | Cyber Security Awareness Week | Contact IT for any urgent help ⚠
+    </div>
+</div>
 
-    <!-- CLEAN MENU -->
-    <div>
+<!-- MENU + VIDEO -->
+<div class="main-wrapper">
+
+    <!-- LEFT MENU -->
+    <div class="menu-box">
         <div class="menu-btn" onclick="toggleMenu()">☰ MENU</div>
 
         <div class="menu-dropdown" id="menuDrop">
@@ -162,10 +190,11 @@ body::before{
             <a href="/contact">☎ Contact Us</a>
             <a href="/admin/login">⚙ Admin</a>
             <a href="/qr/ticket">📱 Scan QR</a>
+            <a href="/Tab-videos">🎥 Tab-Video</a>   <!-- NEW TAB -->
         </div>
     </div>
 
-    <!-- VIDEO BOX -->
+    <!-- RIGHT VIDEO BOX -->
     <div class="video-box">
         <h3>🎥 What is Cyber Security?</h3>
         <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
@@ -174,18 +203,14 @@ body::before{
 </div>
 
 <!-- CHAT ICON -->
-<div class="chat-icon" onclick="toggleChat()">💬</div>
+<div class="chat-icon">💬</div>
 
 <div class="health-bar">© 2026 Ranjan Pathak</div>
 
 <script>
 function toggleMenu(){
     let m = document.getElementById("menuDrop");
-    m.style.display = m.style.display==="flex" ? "none" : "flex";
-}
-
-function toggleChat(){
-    alert("Chat box code already exists, bas yahan attach kar denge 👍");
+    m.style.display = (m.style.display==="flex") ? "none" : "flex";
 }
 </script>
 
