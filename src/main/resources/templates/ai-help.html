@@ -2,136 +2,196 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI Help | Zenex</title>
+<title>RANJAN IT Helpdesk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+/* GLOBAL */
 body{
-    background:#0b1220;
-    font-family:Poppins, sans-serif;
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#050b18;
+    color:white;
+    overflow-x:hidden;
+}
+body::before{
+    content:"";
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:linear-gradient(130deg,#001829,#04101f,#081f39,#000);
+    background-size:400% 400%;
+    animation:bgMove 18s infinite linear;
+    z-index:-1;
+}
+@keyframes bgMove{
+    0%{background-position:0 0}
+    50%{background-position:100% 100%}
+    100%{background-position:0 0}
+}
+
+/* HERO CENTER */
+.hero{
+    text-align:center;
+    margin-top:40px;
+}
+.hero .title{
+    font-size:55px;
+    font-weight:800;
+    margin:0;
+    background:linear-gradient(to right,#00eaff,#24ffd8,#00aaff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+.hero .subtitle{
+    font-size:38px;
+    margin-top:5px;
+    color:#00ffd0;
+}
+.hero .tagline{
+    margin-top:8px;
+    font-size:18px;
+    opacity:0.85;
+}
+
+/* LEFT SIDE MENU (FINAL EXACT POSITION) */
+.left-menu{
+    position:absolute;
+    top:140px;       /* EXACT HEIGHT that matches your screenshot */
+    left:20px;       /* left align */
+    width:170px;
+    z-index:1000;
+}
+
+.left-menu a{
+    display:block;
+    text-decoration:none;
+    padding:12px 15px;
+    margin-bottom:10px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.25);
+    border-radius:12px;
+    backdrop-filter:blur(12px);
+    color:#00eaff;
+    font-size:16px;
+    transition:.2s;
+}
+.left-menu a:hover{
+    background:rgba(0,255,255,0.3);
     color:white;
 }
-.container{
-    max-width:900px;
-    margin:40px auto;
-}
-h1{
-    text-align:center;
-    color:#00eaff;
-}
-.subtitle{
-    text-align:center;
-    opacity:.8;
-    margin-bottom:20px;
-}
-.chat-box{
-    background:#121a2f;
-    padding:20px;
-    border-radius:16px;
-    height:420px;
-    overflow-y:auto;
-}
-.msg{ margin-bottom:14px; line-height:1.6; }
-.user{ color:#00ff95; }
-.ai{ color:#ffd166; }
 
-.input-box{
-    display:flex;
-    gap:10px;
-    margin-top:15px;
+/* MARQUEE BELOW HERO */
+.marquee-box{
+    width:100%;
+    background:rgba(0,255,255,0.15);
+    padding:5px 0;
+    margin-top:20px;
+    overflow:hidden;
+    box-shadow:0 0 10px #00eaff55;
 }
-.input-box input{
-    flex:1;
-    padding:14px;
-    border-radius:8px;
+.marquee-text{
+    white-space:nowrap;
+    display:inline-block;
+    padding-left:100%;
+    animation:marquee 22s linear infinite;
+    color:#00eaff;
+    font-weight:600;
+}
+@keyframes marquee{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-100%);}
+}
+
+/* VIDEO BOX */
+.video-container{
+    width:80%;
+    max-width:900px;
+    margin:0 auto;
+    margin-top:40px;
+}
+
+.video-box{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(0,255,255,0.15);
+    border-radius:20px;
+    padding:20px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 0 25px #00eaff44;
+}
+.video-box h3{
+    font-size:24px;
+    color:#00ffbf;
+    margin-bottom:10px;
+}
+.video-box iframe{
+    width:100%;
+    height:220px;   /* SMALL video */
     border:none;
+    border-radius:16px;
 }
-.input-box button{
-    padding:14px 26px;
-    background:#00eaff;
-    border:none;
-    border-radius:8px;
-    font-weight:700;
-    cursor:pointer;
+
+/* CHAT ICON */
+.chat-icon{
+    position:fixed;
+    bottom:30px;right:25px;
+    width:65px;height:65px;
+    border-radius:50%;
+    background:#00eaff;color:#002233;
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;cursor:pointer;
+    box-shadow:0 0 25px #00eaff;
+    z-index:2000;
 }
-.footer{
+
+/* FOOTER */
+.health-bar{
+    position:fixed;bottom:0;width:100%;
+    background:rgba(0,255,191,0.12);
     text-align:center;
-    margin-top:25px;
+    padding:5px 0;
+    color:#00ffbf;
 }
-.footer a{
-    display:block;
-    margin-top:10px;
-    font-weight:700;
-    text-decoration:none;
-}
-.raise{ color:#ff6b6b; }
-.home{ color:#00eaff; }
+
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-    <h1>🤖 AI Help</h1>
-    <div class="subtitle">Smart IT assistance (English responses)</div>
-
-    <div class="chat-box" id="chat">
-        <div class="msg ai">
-            🤖 Hello! Describe your IT problem and I’ll try to help.
-        </div>
-    </div>
-
-    <div class="input-box">
-        <input id="msg" placeholder="Describe your problem here..."
-               onkeydown="if(event.key==='Enter')send()">
-        <button onclick="send()">Send</button>
-    </div>
-
-    <div class="footer">
-        <a href="javascript:raiseTicket()" class="raise">
-            ❌ Still not solved? Raise a Ticket
-        </a>
-        <a href="/" class="home">⬅ Back to Home</a>
-    </div>
-
+<!-- LEFT SIDE MENU (FINAL) -->
+<div class="left-menu">
+    <a href="/ticket/new">🎫 Raise Ticket</a>
+    <a href="/track">🔍 Track Ticket</a>
+    <a href="/ai-help">🤖 AI Help</a>
+    <a href="/knowledge-base">📄 Articles</a>
+    <a href="/contact">☎ Contact Us</a>
+    <a href="/admin/login">⚙ Admin</a>
+    <a href="/qr/ticket">📱 Scan QR</a>
+    <a href="/videos">🎥 Video</a>
 </div>
 
-<script>
-let conversation = [];
+<!-- HERO CENTER -->
+<div class="hero">
+    <div class="title">Welcome To RANJAN</div>
+    <div class="subtitle">IT Helpdesk</div>
+    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
+</div>
 
-function send(){
-    let input = document.getElementById("msg");
-    let text = input.value.trim();
-    if(!text) return;
+<!-- MARQUEE -->
+<div class="marquee-box">
+    <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
+</div>
 
-    let chat = document.getElementById("chat");
-    chat.innerHTML += `<div class="msg user">👤 ${text}</div>`;
-    conversation.push("USER: " + text);
+<!-- VIDEO SECTION -->
+<div class="video-container">
+    <div class="video-box">
+        <h3>🎥 What is Cyber Security?</h3>
+        <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
+    </div>
+</div>
 
-    fetch('/ai/chat',{
-        method:'POST',
-        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:'message='+encodeURIComponent(text)
-    })
-    .then(r=>r.text())
-    .then(ans=>{
-        chat.innerHTML += `<div class="msg ai">🤖 ${ans.replace(/\n/g,"<br>")}</div>`;
-        chat.scrollTop = chat.scrollHeight;
-        conversation.push("AI: " + ans);
-        localStorage.setItem("AI_HELP_CONVO", conversation.join("\n"));
-    });
+<!-- CHAT ICON -->
+<div class="chat-icon">💬</div>
 
-    input.value="";
-}
-
-function raiseTicket(){
-    // just open ticket page
-    window.location.href = "/ticket/new";
-}
-
-// 👉 inject AI text AFTER ticket page loads
-window.addEventListener("storage", ()=>{});
-</script>
+<div class="health-bar">© 2026 Ranjan Pathak</div>
 
 </body>
 </html>
