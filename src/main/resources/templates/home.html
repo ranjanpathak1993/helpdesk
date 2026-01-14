@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* =========================
+   LAYOUT VARIABLES
+========================= */
+:root{
+  /* Sidebar placement (aapke current menu ki width = 160px, left gap = 20px) */
+  --sidebar-left: 20px;
+  --sidebar-w: 160px;
+  --sidebar-total: calc(var(--sidebar-left) + var(--sidebar-w));
+  --glow-cyan: #00eaff;
+}
 
 /* GLOBAL BACKGROUND */
 body{
@@ -52,17 +63,18 @@ body::before{
 }
 
 /* ==========================================
-   MENU EXACT "WELCOME" HEIGHT PAR LEFT ME
+   LEFT MENU (hero ke pass positioned)
 ========================================== */
 .fixed-menu-left{
     position:absolute;
-    left:20px;
+    left: var(--sidebar-left);
     top:145%;                             /* Hero ke center ke level par */
     transform:translateY(-40%);
-    width:160px;
+    width: var(--sidebar-w);
+    z-index: 1000;
 }
 
-/* MENU BUTTON */
+/* MENU BUTTON (toggle) */
 .menu-btn{
     padding:15px;
     font-size:20px;
@@ -73,13 +85,21 @@ body::before{
     cursor:pointer;
     backdrop-filter:blur(10px);
     text-align:center;
+    user-select:none;
 }
 
-/* MENU DROPDOWN */
+/* MENU DROPDOWN (default hidden; toggle with .open) */
 .menu-dropdown{
     margin-top:12px;
-    display:flex;
+    display:none;                 /* << default hide */
     flex-direction:column;
+    max-height:0;
+    overflow:clip;
+    transition:max-height 220ms ease;
+}
+.menu-dropdown.open{
+    display:flex;
+    max-height:600px;             /* enough to reveal all links with transition */
 }
 .menu-dropdown a{
     text-decoration:none;
@@ -97,7 +117,11 @@ body::before{
     color:#fff;
 }
 
-/* INFO BAR */
+/* INFO BAR (ticker) — now starts after sidebar width */
+.marquee-wrap{
+    margin-left: var(--sidebar-total);
+    width: calc(100% - var(--sidebar-total));
+}
 .marquee-box{
     width:100%;
     background:rgba(0,255,255,0.13);
@@ -149,11 +173,65 @@ body::before{
     bottom:30px;right:25px;
     width:65px;height:65px;
     border-radius:50%;
-    background:#00eaff;color:#002233;
+    background:var(--glow-cyan);color:#002233;
     display:flex;align-items:center;justify-content:center;
     font-size:32px;cursor:pointer;
-    box-shadow:0 0 25px #00eaff;
+    box-shadow:0 0 25px var(--glow-cyan);
     z-index:2100;
+}
+
+/* CHAT WINDOW (hidden by default) */
+.chat-window{
+    position:fixed;
+    right:25px;
+    bottom:110px;                     /* icon ke upar khule */
+    width:320px;max-width:92vw;
+    height:430px;max-height:75vh;
+    background:rgba(5,15,30,0.9);
+    border:1px solid rgba(0,255,255,0.35);
+    border-radius:16px;
+    box-shadow:0 10px 35px rgba(0,234,255,0.35);
+    backdrop-filter: blur(10px);
+    display:none;                      /* << default hide */
+    flex-direction:column;
+    z-index:2200;
+    overflow:hidden;
+}
+.chat-window.open{ display:flex; animation:pop 160ms ease; }
+@keyframes pop{ from{ transform:scale(.98); opacity:.7 } to{ transform:scale(1); opacity:1 } }
+
+.chat-header{
+    padding:10px 12px;
+    background:rgba(0,255,255,0.12);
+    display:flex; align-items:center; justify-content:space-between;
+    color:#9af7ff; font-weight:700;
+}
+.chat-close{
+    background:transparent;border:none;color:#9af7ff;
+    font-size:20px; cursor:pointer; line-height:1;
+}
+.chat-body{
+    flex:1; overflow:auto; padding:12px;
+    display:flex; flex-direction:column; gap:8px;
+}
+.msg{
+    max-width:80%;
+    padding:8px 10px; border-radius:10px; font-size:14px;
+}
+.msg.user{ align-self:flex-end; background:#00eaff; color:#002233; }
+.msg.bot{  align-self:flex-start; background:rgba(255,255,255,0.08); border:1px solid rgba(0,255,255,0.15); color:#cfefff; }
+
+.chat-input{
+    display:flex; gap:6px; padding:10px; background:rgba(255,255,255,0.04);
+}
+.chat-input input{
+    flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(0,255,255,0.25);
+    background:rgba(255,255,255,0.06); color:#eaffff; outline:none;
+}
+.chat-input button{
+    padding:10px 14px; border-radius:10px; border:none; cursor:pointer;
+    background:var(--glow-cyan); color:#002233; font-weight:700;
+    box-shadow:0 0 12px rgba(0,234,255,0.45);
 }
 
 /* FOOTER */
@@ -163,6 +241,14 @@ body::before{
     text-align:center;padding:5px 0;color:#00ffbf;
 }
 
+/* RESPONSIVE: small screens par sidebar offset hata do */
+@media (max-width: 992px){
+  :root{ --sidebar-left:0px; --sidebar-w:0px; --sidebar-total:0px; }
+  .fixed-menu-left{ left: 12px; width: 180px; }
+  .hero .title{ font-size:42px; }
+  .hero .subtitle{ font-size:28px; }
+  .video-box iframe{ height:200px; }
+}
 </style>
 </head>
 <body>
@@ -170,44 +256,142 @@ body::before{
 <!-- HERO -->
 <div class="hero">
 
-    <!-- LEFT MENU FIXED AT HERO HEIGHT -->
+    <!-- LEFT MENU (toggle) -->
     <div class="fixed-menu-left">
-        <div class="menu-btn">☰ MENU</div>
+        <div class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuDropdown">☰ MENU</div>
 
-        <div class="menu-dropdown">
-            <a href="/ticket/new">🎫 Raise Ticket</a>
-            <a href="/track">🔍 Track Ticket</a>
-            <a href="/ai-help">🤖 AI Help</a>
-            <a href="/knowledge-base">📄 Articles</a>
-            <a href="/contact">☎ Contact Us</a>
-            <a href="/qr/ticket">📱 Scan QR</a>
-            <a href="/videos">🎥 Video</a>
-            <a href="/admin/login">⚙ Admin</a>
+        <div class="menu-dropdown" id="menuDropdown">
+            /ticket/new🎫 Raise Ticket</a>
+            /track🔍 Track Ticket</a>
+            /ai-help🤖 AI Help</a>
+            /knowledge-base📄 Articles</a>
+            /contact☎ Contact Us</a>
+            /qr/ticket📱 Scan QR</a>
+            /videos🎥 Video</a>
+            /admin/login⚙ Admin</a>
         </div>
     </div>
 
     <div class="title">Welcome To RANJAN</div>
     <div class="subtitle">IT Helpdesk</div>
-    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
+    <div class="tagline">Your one-stop solution for IT support &amp; ticketing</div>
 </div>
 
-<!-- INFO BAR -->
-<div class="marquee-box">
-    <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
+<!-- INFO BAR (shifted to avoid sidebar) -->
+<div class="marquee-wrap">
+  <div class="marquee-box">
+      <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
+  </div>
 </div>
 
 <!-- VIDEO SECTION -->
 <div class="video-container">
     <div class="video-box">
         <h3>🎥 What is Cyber Security?</h3>
-        <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
+        https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1</iframe>
     </div>
 </div>
 
 <!-- CHAT ICON -->
-<div class="chat-icon">💬</div>
+<div class="chat-icon" id="chatIcon" role="button" aria-label="Open chat" tabindex="0">💬</div>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window" id="chatWindow" aria-hidden="true">
+  <div class="chat-header">
+    Assistant
+    <button class="chat-close" id="chatClose" aria-label="Close chat">×</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg bot">Hi! How can I help you today?</div>
+  </div>
+  <div class="chat-input">
+    <input id="chatInput" type="text" placeholder="Type your message and press Enter..." />
+    <button id="chatSend">Send</button>
+  </div>
+</div>
 
 <div class="health-bar">© 2026 Ranjan Pathak</div>
+
+<!-- ====== SCRIPTS: menu toggle + chat toggle ====== -->
+<script>
+(function(){
+  // ==== MENU TOGGLE ====
+  const menuBtn = document.getElementById('menuBtn');
+  const menuDropdown = document.getElementById('menuDropdown');
+
+  function setMenu(open){
+    if(open){
+      menuDropdown.classList.add('open');
+      menuBtn.setAttribute('aria-expanded','true');
+    } else {
+      menuDropdown.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+    }
+  }
+
+  // Default: hide
+  setMenu(false);
+
+  menuBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const open = !menuDropdown.classList.contains('open');
+    setMenu(open);
+  });
+
+  // Outside click closes the menu
+  document.addEventListener('click', (e)=>{
+    if(menuDropdown.classList.contains('open')){
+      if(!menuDropdown.contains(e.target) && e.target !== menuBtn){
+        setMenu(false);
+      }
+    }
+  });
+
+  // ==== CHAT TOGGLE ====
+  const chatIcon   = document.getElementById('chatIcon');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatClose  = document.getElementById('chatClose');
+  const chatBody   = document.getElementById('chatBody');
+  const chatInput  = document.getElementById('chatInput');
+  const chatSend   = document.getElementById('chatSend');
+
+  function openChat(){
+    chatWindow.classList.add('open');
+    chatWindow.setAttribute('aria-hidden','false');
+    setTimeout(()=> chatInput.focus(), 50);
+  }
+  function closeChat(){
+    chatWindow.classList.remove('open');
+    chatWindow.setAttribute('aria-hidden','true');
+  }
+
+  chatIcon.addEventListener('click', openChat);
+  chatIcon.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); openChat(); }});
+  chatClose.addEventListener('click', closeChat);
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeChat(); });
+
+  // Simple local echo (placeholder)
+  function sendMsg(){
+    const txt = chatInput.value.trim();
+    if(!txt) return;
+    const user = document.createElement('div');
+    user.className='msg user';
+    user.textContent = txt;
+    chatBody.appendChild(user);
+
+    // Fake bot reply
+    const bot = document.createElement('div');
+    bot.className='msg bot';
+    bot.textContent = 'Thanks! We received: ' + txt;
+    setTimeout(()=> { chatBody.appendChild(bot); chatBody.scrollTop = chatBody.scrollHeight; }, 300);
+
+    chatInput.value='';
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  chatSend.addEventListener('click', sendMsg);
+  chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); sendMsg(); }});
+})();
+</script>
 
 </body>
 </html>
