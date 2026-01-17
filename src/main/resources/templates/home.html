@@ -6,8 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-/* GLOBAL BACKGROUND */
 body{
     margin:0;
     font-family:'Poppins',sans-serif;
@@ -29,7 +27,6 @@ body::before{
     100%{background-position:0 0}
 }
 
-/* HERO TEXT */
 .hero{
     text-align:center;
     margin-top:40px;
@@ -51,18 +48,14 @@ body::before{
     opacity:0.85;
 }
 
-/* ==========================================
-   MENU EXACT "WELCOME" HEIGHT PAR LEFT ME
-========================================== */
 .fixed-menu-left{
     position:absolute;
     left:20px;
-    top:145%;                             /* Hero ke center ke level par */
-    transform:translateY(-40%);
+    top:40px;
     width:160px;
+    z-index:1000;
 }
 
-/* MENU BUTTON */
 .menu-btn{
     padding:15px;
     font-size:20px;
@@ -75,12 +68,16 @@ body::before{
     text-align:center;
 }
 
-/* MENU DROPDOWN */
 .menu-dropdown{
     margin-top:12px;
-    display:flex;
+    display:none;
     flex-direction:column;
 }
+
+.fixed-menu-left:hover .menu-dropdown{
+    display:flex;
+}
+
 .menu-dropdown a{
     text-decoration:none;
     padding:12px;
@@ -90,14 +87,15 @@ body::before{
     margin-bottom:10px;
     border-radius:10px;
     backdrop-filter:blur(12px);
-    display:flex;align-items:center;gap:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 .menu-dropdown a:hover{
     background:rgba(0,255,255,0.3);
     color:#fff;
 }
 
-/* INFO BAR */
 .marquee-box{
     width:100%;
     background:rgba(0,255,255,0.13);
@@ -117,14 +115,12 @@ body::before{
     100%{transform:translateX(-100%);}
 }
 
-/* VIDEO SECTION */
 .video-container{
     width:90%;
     max-width:900px;
     margin:0 auto;
     margin-top:50px;
 }
-
 .video-box{
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(0,255,255,0.15);
@@ -133,17 +129,15 @@ body::before{
     backdrop-filter:blur(12px);
     box-shadow:0 0 25px #00eaff44;
 }
-
 .video-box h3{
     font-size:25px;color:#00ffbf;margin-bottom:10px;
 }
 .video-box iframe{
     width:100%;
-    height:220px; /* Smaller frame */
+    height:220px;
     border:none;border-radius:14px;
 }
 
-/* CHAT ICON */
 .chat-icon{
     position:fixed;
     bottom:30px;right:25px;
@@ -156,24 +150,19 @@ body::before{
     z-index:2100;
 }
 
-/* FOOTER */
 .health-bar{
     position:fixed;bottom:0;width:100%;
     background:rgba(0,255,191,0.12);
     text-align:center;padding:5px 0;color:#00ffbf;
 }
-
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
 
-    <!-- LEFT MENU FIXED AT HERO HEIGHT -->
     <div class="fixed-menu-left">
         <div class="menu-btn">☰ MENU</div>
-
         <div class="menu-dropdown">
             <a href="/ticket/new">🎫 Raise Ticket</a>
             <a href="/track">🔍 Track Ticket</a>
@@ -191,12 +180,10 @@ body::before{
     <div class="tagline">Your one-stop solution for IT support & ticketing</div>
 </div>
 
-<!-- INFO BAR -->
 <div class="marquee-box">
     <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
 </div>
 
-<!-- VIDEO SECTION -->
 <div class="video-container">
     <div class="video-box">
         <h3>🎥 What is Cyber Security?</h3>
@@ -204,7 +191,6 @@ body::before{
     </div>
 </div>
 
-<!-- CHAT ICON -->
 <div class="chat-icon">💬</div>
 
 <div class="health-bar">© 2026 Ranjan Pathak</div>
