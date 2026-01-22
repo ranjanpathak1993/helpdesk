@@ -2,195 +2,135 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RANJAN IT Helpdesk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Help | Zenex</title>
 
 <style>
-
-/* GLOBAL */
 body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
-    background:#050b18;
+    background:#0b1220;
+    font-family:Poppins, sans-serif;
     color:white;
 }
-
-/* HERO */
-.hero{
+.container{
+    max-width:900px;
+    margin:40px auto;
+}
+h1{
     text-align:center;
-    margin-top:40px;
-}
-.hero .title{
-    font-size:55px;
-    font-weight:800;
-    margin:0;
-    background:linear-gradient(to right,#00eaff,#24ffd8,#00aaff);
-    -webkit-background-clip:text;
-    color:transparent;
-}
-.hero .subtitle{
-    font-size:38px;
-    margin-top:5px;
-    color:#00ffd0;
-}
-.hero .tagline{
-    margin-top:8px;
-    font-size:18px;
-    opacity:0.85;
-}
-
-/* LEFT MENU FIXED POSITION */
-.left-menu{
-    position:absolute;
-    top:260px;      /* EXACT AI HELP HEIGHT */
-    left:20px;
-    width:200px;
-}
-
-/* MENU BUTTON */
-.menu-title{
-    padding:12px 15px;
-    font-size:20px;
-    font-weight:600;
     color:#00eaff;
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(0,255,255,0.25);
-    border-radius:12px;
-    backdrop-filter:blur(12px);
+}
+.subtitle{
     text-align:center;
+    opacity:.8;
+    margin-bottom:20px;
+}
+.chat-box{
+    background:#121a2f;
+    padding:20px;
+    border-radius:16px;
+    height:420px;
+    overflow-y:auto;
+}
+.msg{ margin-bottom:14px; line-height:1.6; }
+.user{ color:#00ff95; }
+.ai{ color:#ffd166; }
+
+.input-box{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+.input-box input{
+    flex:1;
+    padding:14px;
+    border-radius:8px;
+    border:none;
+}
+.input-box button{
+    padding:14px 26px;
+    background:#00eaff;
+    border:none;
+    border-radius:8px;
+    font-weight:700;
     cursor:pointer;
 }
-
-/* DROPDOWN HIDDEN BY DEFAULT */
-.menu-items{
-    display:none;
-    margin-top:12px;
-}
-
-/* MENU LINKS */
-.menu-items a{
-    display:block;
-    text-decoration:none;
-    padding:12px 15px;
-    margin-bottom:12px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(0,255,255,0.25);
-    border-radius:12px;
-    color:#00eaff;
-    backdrop-filter:blur(12px);
-}
-.menu-items a:hover{
-    background:rgba(0,255,255,0.35);
-    color:white;
-}
-
-/* MARQUEE RIGHT SIDE ONLY */
-.marquee-wrapper{
-    width:100%;
+.footer{
+    text-align:center;
     margin-top:25px;
 }
-.marquee-box{
-    width:calc(100% - 220px);
-    margin-left:220px;
-    background:rgba(0,255,255,0.12);
-    padding:6px 0;
-    overflow:hidden;
-    border-radius:8px;
+.footer a{
+    display:block;
+    margin-top:10px;
+    font-weight:700;
+    text-decoration:none;
 }
-.marquee-text{
-    display:inline-block;
-    white-space:nowrap;
-    padding-left:100%;
-    animation:marquee 20s linear infinite;
-    color:#00eaff;
-    font-weight:600;
-}
-@keyframes marquee{
-    0%{transform:translateX(0);}
-    100%{transform:translateX(-100%);}
-}
-
-/* VIDEO */
-.video-container{
-    width:80%;
-    max-width:900px;
-    margin:60px auto;
-}
-.video-box{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(0,255,255,0.15);
-    padding:20px;
-    border-radius:18px;
-}
-.video-box iframe{
-    width:100%;
-    height:220px;
-    border:none;
-    border-radius:12px;
-}
-
-.health-bar{
-    text-align:center;
-    padding:5px 0;
-    background:rgba(0,255,191,0.12);
-    position:fixed;
-    width:100%;
-    bottom:0;
-}
-
+.raise{ color:#ff6b6b; }
+.home{ color:#00eaff; }
 </style>
 </head>
+
 <body>
 
-<!-- LEFT MENU -->
-<div class="left-menu">
-    
-    <div class="menu-title" onclick="toggleMenu()">
-        ☰ MENU
+<div class="container">
+
+    <h1>🤖 AI Help</h1>
+    <div class="subtitle">Smart IT assistance (English responses)</div>
+
+    <div class="chat-box" id="chat">
+        <div class="msg ai">
+            🤖 Hello! Describe your IT problem and I’ll try to help.
+        </div>
     </div>
 
-    <div class="menu-items" id="menuItems">
-        <a href="/ticket/new">🎫 Raise Ticket</a>
-        <a href="/track">🔍 Track Ticket</a>
-        <a href="/ai-help">🤖 AI Help</a>
-        <a href="/knowledge-base">📄 Articles</a>
-        <a href="/contact">☎ Contact Us</a>
-        <a href="/admin/login">⚙ Admin</a>
-        <a href="/qr/ticket">📱 Scan QR</a>
-        <a href="/videos">🎥 Video</a>
+    <div class="input-box">
+        <input id="msg" placeholder="Describe your problem here..."
+               onkeydown="if(event.key==='Enter')send()">
+        <button onclick="send()">Send</button>
+    </div>
+
+    <div class="footer">
+        <a href="javascript:raiseTicket()" class="raise">
+            ❌ Still not solved? Raise a Ticket
+        </a>
+        <a href="/" class="home">⬅ Back to Home</a>
     </div>
 
 </div>
-
-<!-- HERO -->
-<div class="hero">
-    <div class="title">Welcome To RANJAN</div>
-    <div class="subtitle">IT Helpdesk</div>
-    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
-</div>
-
-<!-- MARQUEE -->
-<div class="marquee-wrapper">
-    <div class="marquee-box">
-        <div class="marquee-text">⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠</div>
-    </div>
-</div>
-
-<!-- VIDEO BOX -->
-<div class="video-container">
-    <div class="video-box">
-        <h3>🎥 What is Cyber Security?</h3>
-        <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
-    </div>
-</div>
-
-<div class="health-bar">© 2026 Ranjan Pathak</div>
 
 <script>
-function toggleMenu(){
-    const box = document.getElementById("menuItems");
-    box.style.display = (box.style.display === "block") ? "none" : "block";
+let conversation = [];
+
+function send(){
+    let input = document.getElementById("msg");
+    let text = input.value.trim();
+    if(!text) return;
+
+    let chat = document.getElementById("chat");
+    chat.innerHTML += `<div class="msg user">👤 ${text}</div>`;
+    conversation.push("USER: " + text);
+
+    fetch('/ai/chat',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'message='+encodeURIComponent(text)
+    })
+    .then(r=>r.text())
+    .then(ans=>{
+        chat.innerHTML += `<div class="msg ai">🤖 ${ans.replace(/\n/g,"<br>")}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+        conversation.push("AI: " + ans);
+        localStorage.setItem("AI_HELP_CONVO", conversation.join("\n"));
+    });
+
+    input.value="";
 }
+
+function raiseTicket(){
+    // just open ticket page
+    window.location.href = "/ticket/new";
+}
+
+// 👉 inject AI text AFTER ticket page loads
+window.addEventListener("storage", ()=>{});
 </script>
 
 </body>
