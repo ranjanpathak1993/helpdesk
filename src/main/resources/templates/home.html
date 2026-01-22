@@ -1,152 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>RANJAN IT Helpdesk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>RANJAN IT Helpdesk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
-    background:#050b18;
-    color:white;
-    overflow-x:hidden;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #050b18;
+            color: white;
+            overflow-x: hidden;
+        }
 
-/* HERO */
-.hero{
-    text-align:center;
-    margin-top:40px;
-    margin-bottom:90px;   /* hero locked */
-    position:relative;
-    z-index:5;
-}
-.hero .title{
-    font-size:55px;
-    font-weight:800;
-    background:linear-gradient(to right,#00eaff,#24ffd8,#00aaff);
-    -webkit-background-clip:text;
-    color:transparent;
-}
-.hero .subtitle{
-    font-size:40px;
-    color:#00ffd0;
-}
-.hero .tagline{
-    font-size:18px;
-    opacity:.85;
-}
+        /* HERO */
+        .hero {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 90px;
+            position: relative;
+            z-index: 5;
+            padding-left: 200px;
+            padding-right: 20px;
+        }
 
-/* MENU */
-.fixed-menu-left{
-    position:absolute;
-    left:20px;
-    top:40px;
-    width:170px;
-    z-index:9999;
-}
-.menu-btn{
-    padding:15px;
-    font-size:20px;
-    background:rgba(255,255,255,.1);
-    border:1px solid rgba(0,255,255,.3);
-    border-radius:12px;
-    cursor:pointer;
-}
-.menu-dropdown{
-    display:none;
-    flex-direction:column;
-    margin-top:10px;
-}
-.fixed-menu-left:hover .menu-dropdown{
-    display:flex;
-}
-.menu-dropdown a{
-    padding:12px;
-    margin-bottom:8px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(0,255,255,.25);
-    color:#00eaff;
-    border-radius:10px;
-    text-decoration:none;
-}
-.menu-dropdown a:hover{
-    background:rgba(0,255,255,.3);
-    color:white;
-}
+        .hero .title {
+            font-size: 55px;
+            font-weight: 800;
+            background: linear-gradient(to right, #00eaff, #24ffd8, #00aaff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
-/* MARQUEE */
-.marquee-box{
-    width:100%;
-    background:rgba(0,255,255,.13);
-    padding:8px 0;
-    overflow:hidden;
-    margin-top:20px;
-}
-.marquee-text{
-    white-space:nowrap;
-    display:inline-block;
-    padding-left:100%;
-    animation:marquee 20s linear infinite;
-}
-@keyframes marquee{
-    from{transform:translateX(0);}
-    to{transform:translateX(-100%);}
-}
+        .hero .subtitle {
+            font-size: 40px;
+            color: #00ffd0;
+        }
 
-/* VIDEO */
-.video-container{
-    width:90%;
-    max-width:900px;
-    margin:50px auto;
-    position:relative;
-    z-index:1;
-}
-.video-box{
-    background:rgba(255,255,255,.08);
-    border-radius:20px;
-    padding:20px;
-}
-.video-box iframe{
-    width:100%;
-    height:220px;
-    border:none;
-    border-radius:12px;
-}
+        .hero .tagline {
+            font-size: 18px;
+            opacity: .85;
+        }
 
-/* CHAT */
-.chat-icon{
-    position:fixed;
-    bottom:30px;
-    right:25px;
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    background:#00eaff;
-    color:#002233;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    cursor:pointer;
-    z-index:9999;
-}
+        /* MENU */
+        .fixed-menu-left {
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            width: 170px;
+            z-index: 9999;
+        }
 
-/* FOOTER */
-.health-bar{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    background:rgba(0,255,191,.12);
-    text-align:center;
-    padding:5px;
-}
-</style>
+        .menu-btn {
+            padding: 15px;
+            font-size: 20px;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(0, 255, 255, .3);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .menu-dropdown {
+            display: none;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .fixed-menu-left:hover .menu-dropdown {
+            display: flex;
+        }
+
+        .menu-dropdown a {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(0, 255, 255, .25);
+            color: #00eaff;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .menu-dropdown a:hover {
+            background: rgba(0, 255, 255, .3);
+            color: white;
+        }
+
+        /* MARQUEE */
+        .marquee-box {
+            width: 100%;
+            background: rgba(0, 255, 255, .13);
+            padding: 8px 0;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .marquee-text {
+            white-space: nowrap;
+            display: inline-block;
+            padding-left: 100%;
+            /* Decreased animation duration to match the shorter travel distance */
+            animation: marquee 15s linear infinite; 
+        }
+
+        /* KEY CHANGE HERE: Stop before it reaches the left edge */
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            /* Stops the text roughly 70% across the viewport instead of 100% (off-screen) */
+            to {
+                transform: translateX(-70vw); 
+            }
+        }
+
+        /* VIDEO */
+        .video-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-box {
+            background: rgba(255, 255, 255, .08);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .video-box iframe {
+            width: 100%;
+            height: 220px;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* CHAT */
+        .chat-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #00eaff;
+            color: #002233;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* FOOTER */
+        .health-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 255, 191, .12);
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
 </head>
-<body>
 
-<div class="hero">
+<body>
 
     <div class="fixed-menu-left">
         <div class="menu-btn">☰ MENU</div>
@@ -162,27 +185,29 @@ body{
         </div>
     </div>
 
-    <div class="title">Welcome To RANJAN</div>
-    <div class="subtitle">IT Helpdesk</div>
-    <div class="tagline">Your one-stop solution for IT support & ticketing</div>
-</div>
-
-<div class="marquee-box">
-    <div class="marquee-text">
-        ⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠
+    <div class="hero">
+        <div class="title">Welcome To RANJAN</div>
+        <div class="subtitle">IT Helpdesk</div>
+        <div class="tagline">Your one-stop solution for IT support & ticketing</div>
     </div>
-</div>
 
-<div class="video-container">
-    <div class="video-box">
-        <h3>🎥 What is Cyber Security?</h3>
-        <iframe src="https://www.youtube.com/embed/inWWhr5tnEA?autoplay=1&mute=1"></iframe>
+    <div class="marquee-box">
+        <div class="marquee-text">
+            ⚠ Scheduled Maintenance Tonight 10 PM – 12 AM | Cybersecurity Mandatory ⚠
+        </div>
     </div>
-</div>
 
-<a href="/ai-help" class="chat-icon">💬</a>
+    <div class="video-container">
+        <div class="video-box">
+            <h3>🎥 What is Cyber Security?</h3>
+            <iframe src="https://www.youtube.com"></iframe>
+        </div>
+    </div>
 
-<div class="health-bar">© 2026 Ranjan Pathak</div>
+    <a href="/ai-help" class="chat-icon">💬</a>
+
+    <div class="health-bar">© 2026 Ranjan Pathak</div>
 
 </body>
+
 </html>
