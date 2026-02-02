@@ -48,37 +48,31 @@ public class PageController {
         return "track-result";
     }
 
-    // ================= KNOWLEDGE BASE / ARTICLES =================
+    // ================= KNOWLEDGE BASE =================
     @GetMapping("/knowledge-base")
     public String knowledgeBase() {
         return "knowledge-base";
     }
 
-    // ================= AI HELP =================
-    @GetMapping("/ai-help")
-    public String aiHelp() {
-        return "ai-help";
-    }
-
-    // ================= CONTACT PAGE =================
+    // ================= CONTACT =================
     @GetMapping("/contact")
     public String contactPage() {
         return "contact";
     }
 
-    // ================= VIDEOS PAGE =================
+    // ================= VIDEOS =================
     @GetMapping("/videos")
     public String videosPage() {
         return "videos";
     }
 
-    // ================= QR PAGE (OPTIONAL / SAFE) =================
+    // ================= QR PAGE (OPTIONAL) =================
     @GetMapping("/qr/ticket")
     public String qrTicketPage() {
         return "qr-ticket";
     }
 
-    // ================= ADMIN REDIRECT SAFETY =================
+    // ================= ADMIN SAFETY REDIRECT =================
     @GetMapping("/admin")
     public String adminRedirect() {
         return "redirect:/admin/login";
