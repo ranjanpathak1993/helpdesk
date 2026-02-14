@@ -15,3 +15,10 @@ public class User {
     private String password;
     private String role;   // ADMIN / USER
 }
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(
+    name = "user_permissions",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "permission_id")
+)
+private Set<Permission> permissions;
