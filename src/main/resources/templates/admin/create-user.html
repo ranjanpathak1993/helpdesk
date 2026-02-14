@@ -1,0 +1,23 @@
+<form method="post" th:action="@{/admin/create-user}">
+
+  Email:
+  <input type="email" name="email"/>
+
+  Password:
+  <input type="password" name="password"/>
+
+  Role:
+  <select name="role">
+    <option value="ADMIN">ADMIN</option>
+    <option value="USER">USER</option>
+  </select>
+
+  <h4>Access</h4>
+  <div th:each="p : ${permissions}">
+    <input type="checkbox" name="permissionIds"
+           th:value="${p.id}"/>
+    <span th:text="${p.code}"></span>
+  </div>
+
+  <button type="submit">Create User</button>
+</form>
