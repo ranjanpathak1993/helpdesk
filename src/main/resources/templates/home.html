@@ -6,28 +6,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* { box-sizing: border-box; }
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
+}
 
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
     font-family: 'Poppins', sans-serif;
     background: #050b18;
     color: white;
+    overflow-x: hidden;   /* horizontal drag fix */
+    overflow-y: auto;     /* mobile scroll allow */
 }
 
 /* ================= MENU ================= */
 .fixed-menu-left {
     position: fixed;
-    left: 15px;
-    top: 15px;
-    width: 160px;
+    left: 20px;
+    top: 20px;
+    width: 170px;
     z-index: 9999;
 }
 
 .menu-btn {
-    padding: 12px;
-    font-size: 16px;
+    padding: 14px;
+    font-size: 18px;
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(0,255,255,.3);
     border-radius: 12px;
@@ -56,19 +62,24 @@ html, body {
     font-size: 14px;
 }
 
+.menu-dropdown a:hover {
+    background: rgba(0,255,255,.3);
+    color: white;
+}
+
 /* ================= HERO ================= */
 .hero {
-    min-height: 45vh;
+    height: 45vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-left: 200px;   /* ORIGINAL desktop behaviour */
     text-align: center;
-    padding: 20px;
 }
 
 .hero .title {
-    font-size: 42px;
+    font-size: 48px;
     font-weight: 800;
     background: linear-gradient(to right, #00eaff, #24ffd8, #00aaff);
     -webkit-background-clip: text;
@@ -76,19 +87,18 @@ html, body {
 }
 
 .hero .subtitle {
-    font-size: 30px;
+    font-size: 34px;
     color: #00ffd0;
 }
 
 .hero .tagline {
-    font-size: 15px;
+    font-size: 16px;
     opacity: .85;
-    max-width: 90%;
 }
 
-/* ================= MARQUEE ================= */
+/* ================= MARQUEE (ORIGINAL LOGIC) ================= */
 .marquee-box {
-    height: 36px;
+    height: 40px;
     background: rgba(0,255,255,.12);
     overflow: hidden;
     display: flex;
@@ -99,24 +109,24 @@ html, body {
     white-space: nowrap;
     padding-left: 100%;
     animation: marquee 14s linear infinite;
-    font-size: 14px;
 }
 
 @keyframes marquee {
     from { transform: translateX(0); }
-    to { transform: translateX(-100%); }
+    to { transform: translateX(-70vw); } /* ORIGINAL stop illusion */
 }
 
 /* ================= VIDEO ================= */
 .video-container {
+    height: 40vh;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
 }
 
 .video-box {
-    width: 100%;
-    max-width: 900px;
+    width: 85%;
+    max-width: 820px;
     background: rgba(255,255,255,.08);
     border-radius: 18px;
     padding: 14px;
@@ -135,36 +145,49 @@ html, body {
 
 .video-wrapper iframe {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 12px;
     border: none;
+    border-radius: 12px;
+}
+
+/* ================= CHAT ================= */
+.chat-icon {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #00eaff;
+    color: #002233;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 9999;
 }
 
 /* ================= FOOTER ================= */
 .health-bar {
+    position: fixed;
+    bottom: 0;
     width: 100%;
     height: 32px;
     background: rgba(0,255,191,.12);
     text-align: center;
     line-height: 32px;
     font-size: 13px;
-    margin-top: 20px;
 }
 
-/* ================= MOBILE FIX ================= */
+/* ================= MOBILE ONLY ================= */
 @media (max-width: 768px) {
 
-    .fixed-menu-left {
-        left: 10px;
-        top: 10px;
-        width: auto;
-    }
-
-    .menu-btn {
-        font-size: 14px;
-        padding: 10px;
+    .hero {
+        padding-left: 0;      /* mobile fix, desktop untouched */
     }
 
     .hero .title {
@@ -177,6 +200,11 @@ html, body {
 
     .hero .tagline {
         font-size: 14px;
+    }
+
+    .video-container {
+        height: auto;
+        padding: 20px 0;
     }
 }
 </style>
@@ -219,8 +247,10 @@ html, body {
         <h3>🎥 What is Cyber Security?</h3>
         <div class="video-wrapper">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/inWWhr5tnEA"
-              allowfullscreen>
+              src="https://www.youtube-nocookie.com/embed/inWWhr5tnEA?rel=0&modestbranding=1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              referrerpolicy="strict-origin-when-cross-origin">
             </iframe>
         </div>
     </div>
