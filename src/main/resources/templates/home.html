@@ -18,8 +18,7 @@ html, body {
     font-family: 'Poppins', sans-serif;
     background: #050b18;
     color: white;
-    overflow-x: hidden;   /* horizontal drag fix */
-    overflow-y: auto;     /* mobile scroll allow */
+    overflow: hidden; /* 🔥 SCROLL KILL */
 }
 
 /* ================= MENU ================= */
@@ -74,7 +73,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-left: 200px;   /* ORIGINAL desktop behaviour */
+    padding-left: 200px;
     text-align: center;
 }
 
@@ -96,7 +95,7 @@ html, body {
     opacity: .85;
 }
 
-/* ================= MARQUEE (ORIGINAL LOGIC) ================= */
+/* ================= MARQUEE ================= */
 .marquee-box {
     height: 40px;
     background: rgba(0,255,255,.12);
@@ -113,7 +112,7 @@ html, body {
 
 @keyframes marquee {
     from { transform: translateX(0); }
-    to { transform: translateX(-70vw); } /* ORIGINAL stop illusion */
+    to { transform: translateX(-70vw); }
 }
 
 /* ================= VIDEO ================= */
@@ -137,18 +136,9 @@ html, body {
     font-size: 18px;
 }
 
-.video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-}
-
-.video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+.video-box iframe {
     width: 100%;
-    height: 100%;
+    height: 220px;
     border: none;
     border-radius: 12px;
 }
@@ -171,6 +161,20 @@ html, body {
     z-index: 9999;
 }
 
+#chatFrame {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    width: 360px;
+    height: 460px;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 0 20px rgba(0,0,0,.4);
+    display: none;
+    background: white;
+    z-index: 9999;
+}
+
 /* ================= FOOTER ================= */
 .health-bar {
     position: fixed;
@@ -181,31 +185,6 @@ html, body {
     text-align: center;
     line-height: 32px;
     font-size: 13px;
-}
-
-/* ================= MOBILE ONLY ================= */
-@media (max-width: 768px) {
-
-    .hero {
-        padding-left: 0;      /* mobile fix, desktop untouched */
-    }
-
-    .hero .title {
-        font-size: 32px;
-    }
-
-    .hero .subtitle {
-        font-size: 24px;
-    }
-
-    .hero .tagline {
-        font-size: 14px;
-    }
-
-    .video-container {
-        height: auto;
-        padding: 20px 0;
-    }
 }
 </style>
 </head>
@@ -245,19 +224,25 @@ html, body {
 <div class="video-container">
     <div class="video-box">
         <h3>🎥 What is Cyber Security?</h3>
-        <div class="video-wrapper">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/inWWhr5tnEA?rel=0&modestbranding=1"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              referrerpolicy="strict-origin-when-cross-origin">
-            </iframe>
-        </div>
+        <iframe src="https://www.youtube.com/embed/inWWhr5tnEA"></iframe>
     </div>
 </div>
 
+<!-- CHAT -->
+<div class="chat-icon" id="chatToggle">💬</div>
+<iframe id="chatFrame" src="/chat-widget.html"></iframe>
+
 <!-- FOOTER -->
 <div class="health-bar">© 2026 Ranjan Pathak</div>
+
+<script>
+const toggle = document.getElementById("chatToggle");
+const frame = document.getElementById("chatFrame");
+
+toggle.onclick = () => {
+    frame.style.display = frame.style.display === "none" ? "block" : "none";
+};
+</script>
 
 </body>
 </html>
