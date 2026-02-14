@@ -14,12 +14,6 @@ public class PageController {
     @Autowired
     private TicketRepository ticketRepo;
 
-    // ================= HOME =================
-    @GetMapping("/")
-    public String homePage() {
-        return "home";
-    }
-
     // ================= TRACK TICKET =================
     @GetMapping("/track")
     public String trackPage() {
@@ -66,7 +60,7 @@ public class PageController {
         return "videos";
     }
 
-    // ================= QR PAGE (OPTIONAL) =================
+    // ================= QR PAGE =================
     @GetMapping("/qr/ticket")
     public String qrTicketPage() {
         return "qr-ticket";
