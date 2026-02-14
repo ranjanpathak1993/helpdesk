@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
+    @PreAuthorize("hasAuthority('DASHBOARD_VIEW')")
+@GetMapping("/admin/dashboard")
+public String dashboard() {
+    return "admin/dashboard";
+}
     @Autowired
     private TicketRepository ticketRepo;
 
