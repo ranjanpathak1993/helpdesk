@@ -69,4 +69,12 @@ public String dashboard() {
     public String analytics() {
         return "admin/admin-analytics";
     }
+@PreAuthorize("hasAuthority('USER_CREATE')")
+@PreAuthorize("hasAuthority('USER_CREATE')")
+@GetMapping("/admin/create-user")
+public String createUserPage(Model model) {
+    model.addAttribute("user", new User());
+    model.addAttribute("permissions", permissionRepo.findAll());
+    return "admin/create-user";
+}
 }
